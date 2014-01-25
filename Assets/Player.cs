@@ -19,12 +19,18 @@ public class Player : MonoBehaviour
     static Color[] colors = { Color.cyan, Color.red, Color.green, Color.magenta };
     public int score = 0;
 
-	enum InputState {InitialInput, Moving, Paused};
-	enum InoutMethod {KeyboardControl, MouseControl};
+	enum InputState {InitialInput, Moving, Paused, MouseUnConnected};
+	enum InputMethod {KeyboardControl, MouseControl};
 	private InputState currentState;
-	private InoutMethod currentMethod;
+	private InputMethod currentMethod;
 	private Vector3 startMousePosition;
+	private Vector3 currentMousePosition;
 	public float mouseSpeed = 3f;
+
+	private Vector3 oldMousePosition;
+	private Vector3 newMousePosition;
+
+	public Texture cursorImage;
 
     void Start()
     {
@@ -35,11 +41,26 @@ public class Player : MonoBehaviour
 
 		currentState = InputState.InitialInput;
 		startMousePosition = Input.mousePosition;
+		currentMousePosition = startMousePosition;
+		oldMousePosition = startMousePosition;
 		Debug.Log(startMousePosition);
     }
 
+	void OnGUI()
+	{
+		GUI.DrawTexture(new Rect(currentMousePosition.x - cursorImage.width/2, Screen.height - (currentMousePosition.y + cursorImage.height/2), cursorImage.width, cursorImage.height), cursorImage);
+	}
+
     void Update()
     {
+		Screen.lockCursor = true;
+		Screen.showCursor = false;
+		newMousePosition = Input.mousePosition;
+		//Vector3 mouseDelta = newMousePosition - oldMousePosition; 
+		Vector3 mouseDelta = new Vector3(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"), 0f) * 15f;
+		currentMousePosition += mouseDelta;
+		oldMousePosition = newMousePosition;
+		Debug.Log (currentMousePosition);
 		switch (currentState)
 		{
 		case InputState.InitialInput:
@@ -50,6 +71,9 @@ public class Player : MonoBehaviour
 			Move();
 			break;
 		case InputState.Paused:
+			break;
+		case InputState.MouseUnConnected:
+			LookForNear();
 			break;
 		}
 	
@@ -113,16 +137,16 @@ public class Player : MonoBehaviour
 				wasd[2] = qwerty[i, j];
 				wasd[3] = qwerty[i, j + 1];
 
-				currentMethod = InoutMethod.KeyboardControl;
+				currentMethod = InputMethod.KeyboardControl;
 				currentState = InputState.Moving;
 				Debug.Log ("KeyboardControl");
 				return;
 			}
 
-		if ( Input.GetAxis ("Mouse X") > .1 || Input.GetAxis("Mouse Y") > .1)
+		if ( Input.GetAxis ("Mouse X") > .5 || Input.GetAxis("Mouse Y") > .5)
 		{
 			//use mouse
-			currentMethod = InoutMethod.MouseControl;
+			currentMethod = InputMethod.MouseControl;
 			currentState = InputState.Moving;
 			Debug.Log( Input.GetAxis ("Mouse X") + " : " +  Input.GetAxis("Mouse Y"));
 			Debug.Log ("MouseControl");
@@ -134,10 +158,10 @@ public class Player : MonoBehaviour
 	{
 		switch (currentMethod)
 		{
-		case InoutMethod.KeyboardControl:
+		case InputMethod.KeyboardControl:
 			MoveWithKeyboard();
 			break;
-		case InoutMethod.MouseControl:
+		case InputMethod.MouseControl:
 			MoveWithMouse();
 			break;
 		}
@@ -147,12 +171,14 @@ public class Player : MonoBehaviour
 	{
 		//cast ray into scene and move player towards position
 		float distance = Mathf.Abs(Camera.main.transform.position.z - this.gameObject.transform.position.z);
-		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		//Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		Ray ray = Camera.main.ScreenPointToRay(currentMousePosition);
 		Vector3 point = ray.origin + (ray.direction * distance);
 
 		Vector3 newVel = (point - this.gameObject.transform.position).normalized;
 		if (Vector3.Magnitude(newVel * mouseSpeed * Time.deltaTime) > Vector3.Distance(point, this.gameObject.transform.position))
 		{
+			newVel.z = 0f;
 			vel = newVel * mouseSpeed * Time.deltaTime; 
 		}
 		else
@@ -204,6 +230,46 @@ public class Player : MonoBehaviour
 			}
 			
 			controller.Move(vel * Time.deltaTime);
+		}
+	}
+
+	public void PausePlayer(bool b)
+	{
+		if (b)
+		{
+			currentState = InputState.Paused;
+		}
+		else
+		{
+			currentState = InputState.Moving;
+		}
+	}
+
+	public void UnConnect()
+	{
+		if (currentMethod == InputMethod.MouseControl)
+		{
+			currentState = InputState.MouseUnConnected;
+			//play some effect
+		}
+	}
+
+	public void SetNewMouse(Vector3 position)
+	{
+		currentMousePosition = position;
+	}
+
+	private void LookForNear()
+	{
+		//cast ray into scene and move player towards position
+		float distance = Mathf.Abs(Camera.main.transform.position.z - this.gameObject.transform.position.z);
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		Vector3 point = ray.origin + (ray.direction * distance);
+		
+		Vector3 newVel = (point - this.gameObject.transform.position);
+		if (Vector3.Magnitude(newVel) < 1f)
+		{
+			currentState = InputState.Moving;
 		}
 	}
 }
