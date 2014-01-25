@@ -171,14 +171,13 @@ MonoBehaviour:
   roomGridWidth: 16
   roomGridHeight: 12
   roomScale: 2
-  roomsMin: 8
-  roomsMax: 8
   Floor: {fileID: 100000, guid: fbd6e5ec709017f47895263ae2368b7a, type: 2}
   Wall: {fileID: 100000, guid: 79567e9aea7039a4d9cc5782dda7eb77, type: 2}
   Door: {fileID: 100000, guid: 8e606bdbb56cf4e459f8b3205c483a02, type: 2}
   Corridor: {fileID: 100000, guid: 7e758f510759cfb4db6c8d6554c739cc, type: 2}
   Key: {fileID: 100000, guid: 8976f3cb06c919a4789317146548a8a3, type: 2}
   Enemy: {fileID: 100002, guid: 3fc5f5705946d9747bbb91e4ba6b18e8, type: 2}
+  CameraSpeed: 25
 --- !u!1 &361139051
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,6 +190,7 @@ GameObject:
   - 23: {fileID: 361139055}
   - 114: {fileID: 361139054}
   - 143: {fileID: 361139053}
+  - 114: {fileID: 361139056}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -206,7 +206,7 @@ Transform:
   m_GameObject: {fileID: 361139051}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1, y: 1, z: -1}
-  m_LocalScale: {x: .5, y: .5, z: .5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 865052454}
   m_Father: {fileID: 0}
@@ -241,7 +241,8 @@ MonoBehaviour:
   speed: 8
   ladders: 0
   score: 0
-  mouseSpeed: 1000
+  mouseSpeed: 500
+  cursorImage: {fileID: 2800000, guid: 171112a1dbfef47079053f62a4842625, type: 3}
 --- !u!23 &361139055
 Renderer:
   m_ObjectHideFlags: 0
@@ -251,7 +252,7 @@ Renderer:
   m_GameObject: {fileID: 361139051}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 0
+  m_ReceiveShadows: 1
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
@@ -264,6 +265,17 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
+--- !u!114 &361139056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 361139051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15075024d29cc43a6a09ac32b9e2411b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &361139057
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -384,28 +396,20 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: a0767b9089d34b54c9d989ce7a957e4f, type: 2}
       propertyPath: m_ReceiveShadows
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: a0767b9089d34b54c9d989ce7a957e4f, type: 2}
       propertyPath: mouseSpeed
-      value: 1000
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: a0767b9089d34b54c9d989ce7a957e4f, type: 2}
       propertyPath: m_UseLightProbes
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: a0767b9089d34b54c9d989ce7a957e4f, type: 2}
-      propertyPath: m_LocalScale.x
-      value: .5
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: a0767b9089d34b54c9d989ce7a957e4f, type: 2}
-      propertyPath: m_LocalScale.y
-      value: .5
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: a0767b9089d34b54c9d989ce7a957e4f, type: 2}
-      propertyPath: m_LocalScale.z
-      value: .5
-      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: a0767b9089d34b54c9d989ce7a957e4f, type: 2}
+      propertyPath: cursorImage
+      value: 
+      objectReference: {fileID: 2800000, guid: 171112a1dbfef47079053f62a4842625, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a0767b9089d34b54c9d989ce7a957e4f, type: 2}
   m_RootGameObject: {fileID: 361139051}

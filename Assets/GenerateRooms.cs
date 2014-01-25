@@ -25,6 +25,9 @@ public class GenerateRooms : MonoBehaviour
     List<Vector3> roomPos = new List<Vector3>();
 
     GameObject player;
+	private bool movingCamera = false;
+	private Vector3 cameraTarget;
+	public float CameraSpeed = 50f;
 
     void Start()
     {
@@ -147,15 +150,14 @@ public class GenerateRooms : MonoBehaviour
 
     void Update()
     {
-        if (player.transform.position.x > transform.position.x + roomGridWidth / 2f)
-            transform.position += new Vector3(roomGridWidth, 0, 0);
-        else if (player.transform.position.x < transform.position.x - roomGridWidth / 2f)
-            transform.position -= new Vector3(roomGridWidth, 0, 0);
-
-        if (player.transform.position.y > transform.position.y + roomGridHeight / 2f)
-            transform.position += new Vector3(0, roomGridHeight, 0);
-        else if (player.transform.position.y < transform.position.y - roomGridHeight / 2f)
-            transform.position -= new Vector3(0, roomGridHeight, 0);
+		if (!movingCamera)
+		{
+			LookAtPlayerPosition();
+		}
+		else
+		{
+			MoveCamera();
+		}
     }
 
     void generateWorld()
@@ -290,4 +292,58 @@ public class GenerateRooms : MonoBehaviour
             }
         }*/
     }
+
+	private void LookAtPlayerPosition()
+	{
+		if (player.transform.position.x > transform.position.x + roomGridWidth / 2f)
+		{
+			movingCamera = true;
+			player.GetComponent<Player>().PausePlayer(true);
+			cameraTarget = transform.position + new Vector3(roomGridWidth, 0, 0);
+			//player.GetComponent<MovePlayer>().StartMoving(transform.position.x + (roomGridWidth * .6f), CameraSpeed * 10f);
+		}
+		else if (player.transform.position.x < transform.position.x - roomGridWidth / 2f)
+		{
+			movingCamera = true;
+			player.GetComponent<Player>().PausePlayer(true);
+			cameraTarget = transform.position - new Vector3(roomGridWidth, 0, 0);
+			//player.GetComponent<MovePlayer>().StartMoving(transform.position + (cameraTarget-transform.position) * .4f , CameraSpeed * 10f);
+		}
+		
+		if (player.transform.position.y > transform.position.y + roomGridHeight / 2f)
+		{
+			movingCamera = true;
+			player.GetComponent<Player>().PausePlayer(true);
+			cameraTarget = transform.position + new Vector3(0, roomGridHeight, 0);
+			//player.GetComponent<MovePlayer>().StartMoving(transform.position - (cameraTarget-transform.position) * .4f , CameraSpeed * 10f);
+		}
+		else if (player.transform.position.y < transform.position.y - roomGridHeight / 2f)
+		{
+			movingCamera = true;
+			player.GetComponent<Player>().PausePlayer(true);
+			cameraTarget = transform.position - new Vector3(0, roomGridHeight, 0);
+			//player.GetComponent<MovePlayer>().StartMoving(transform.position - (cameraTarget-transform.position) * .4f , CameraSpeed * 10f);
+		}
+	}
+
+	private void MoveCamera()
+	{
+		//move camera over time
+		Vector3 temp = cameraTarget - transform.position;
+		if ((CameraSpeed * Time.deltaTime) < Vector3.Distance(transform.position, cameraTarget))
+		{
+			transform.position += temp.normalized * CameraSpeed * Time.deltaTime;
+		}
+		else
+		{
+			transform.position = cameraTarget;
+			movingCamera = false;
+			player.GetComponent<Player>().PausePlayer(false);
+			//player.GetComponent<Player>().UnConnect();
+			player.GetComponent<Player>().SetNewMouse(Camera.main.WorldToScreenPoint(player.transform.position));
+			Debug.Log ("Finished moving");
+		}
+	}
+
+
 }
