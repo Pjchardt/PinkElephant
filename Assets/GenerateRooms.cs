@@ -330,7 +330,7 @@ public class GenerateRooms : MonoBehaviour
 	{
 		//move camera over time
 		Vector3 temp = cameraTarget - transform.position;
-		if ((CameraSpeed * Time.deltaTime) < Vector3.Distance(transform.position, cameraTarget))
+		if ((CameraSpeed * Time.deltaTime) < Vector3.Distance(transform.position, cameraTarget) - .1)
 		{
 			transform.position += temp.normalized * CameraSpeed * Time.deltaTime;
 		}

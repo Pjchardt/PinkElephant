@@ -243,7 +243,7 @@ MonoBehaviour:
   speed: 8
   ladders: 0
   score: 0
-  mouseSpeed: 500
+  mouseSpeed: 20
   cursorImage: {fileID: 2800000, guid: 171112a1dbfef47079053f62a4842625, type: 3}
 --- !u!23 &361139055
 Renderer:
@@ -261,7 +261,7 @@ Renderer:
   - {fileID: 2100000, guid: 566e35e21b5333d43aabe37285140eb3, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
+  m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_SortingLayer: 0
@@ -402,11 +402,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: a0767b9089d34b54c9d989ce7a957e4f, type: 2}
       propertyPath: mouseSpeed
-      value: 500
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: a0767b9089d34b54c9d989ce7a957e4f, type: 2}
       propertyPath: m_UseLightProbes
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: a0767b9089d34b54c9d989ce7a957e4f, type: 2}
       propertyPath: cursorImage

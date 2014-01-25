@@ -32,6 +32,8 @@ public class Player : MonoBehaviour
 
 	public Texture cursorImage;
 
+	private float startTime;
+
     void Start()
     {
         keys.Add(0);
@@ -44,23 +46,23 @@ public class Player : MonoBehaviour
 		currentMousePosition = startMousePosition;
 		oldMousePosition = startMousePosition;
 		Debug.Log(startMousePosition);
+
+		startTime = Time.timeSinceLevelLoad;
     }
 
 	void OnGUI()
 	{
-		GUI.DrawTexture(new Rect(currentMousePosition.x - cursorImage.width/2, Screen.height - (currentMousePosition.y + cursorImage.height/2), cursorImage.width, cursorImage.height), cursorImage);
+		if (currentMethod == InputMethod.MouseControl)
+		{
+			//GUI.DrawTexture(new Rect(currentMousePosition.x - cursorImage.width/2, Screen.height - (currentMousePosition.y + cursorImage.height/2), cursorImage.width, cursorImage.height), cursorImage);
+		}
 	}
 
     void Update()
     {
 		Screen.lockCursor = true;
 		Screen.showCursor = false;
-		newMousePosition = Input.mousePosition;
-		//Vector3 mouseDelta = newMousePosition - oldMousePosition; 
-		Vector3 mouseDelta = new Vector3(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"), 0f) * 15f;
-		currentMousePosition += mouseDelta;
-		oldMousePosition = newMousePosition;
-		Debug.Log (currentMousePosition);
+
 		switch (currentState)
 		{
 		case InputState.InitialInput:
@@ -139,7 +141,11 @@ public class Player : MonoBehaviour
 
 				currentMethod = InputMethod.KeyboardControl;
 				currentState = InputState.Moving;
-				Debug.Log ("KeyboardControl");
+				//Debug.Log ("KeyboardControl");
+				float inputDelay = Time.timeSinceLevelLoad - startTime;
+				inputDelay /= 5f;
+				inputDelay = Mathf.Clamp(inputDelay, 0f, 1f);
+				Time.timeScale = 1.5f - inputDelay;
 				return;
 			}
 
@@ -148,8 +154,12 @@ public class Player : MonoBehaviour
 			//use mouse
 			currentMethod = InputMethod.MouseControl;
 			currentState = InputState.Moving;
-			Debug.Log( Input.GetAxis ("Mouse X") + " : " +  Input.GetAxis("Mouse Y"));
-			Debug.Log ("MouseControl");
+			float inputDelay = Time.timeSinceLevelLoad - startTime;
+			inputDelay /= 4f;
+			inputDelay = Mathf.Clamp(inputDelay, 0f, .4f);
+			Time.timeScale = 1.2f - inputDelay;
+			//Debug.Log( Input.GetAxis ("Mouse X") + " : " +  Input.GetAxis("Mouse Y"));
+			//Debug.Log ("MouseControl");
 		}
 
 	}
@@ -169,21 +179,30 @@ public class Player : MonoBehaviour
 
 	private void MoveWithMouse()
 	{
+		newMousePosition = Input.mousePosition;
+		//Vector3 mouseDelta = newMousePosition - oldMousePosition; 
+		Vector3 mouseDelta = new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0f) * 20f;
+		currentMousePosition = currentMousePosition * (4f * Time.deltaTime) + (currentMousePosition + mouseDelta) * (1f - 4f * Time.deltaTime);
+		oldMousePosition = newMousePosition;
+		Debug.Log (currentMousePosition);
+
 		//cast ray into scene and move player towards position
-		float distance = Mathf.Abs(Camera.main.transform.position.z - this.gameObject.transform.position.z);
+		float distance = (Camera.main.transform.position - this.gameObject.transform.position).magnitude;
 		//Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		Ray ray = Camera.main.ScreenPointToRay(currentMousePosition);
 		Vector3 point = ray.origin + (ray.direction * distance);
 
 		Vector3 newVel = (point - this.gameObject.transform.position).normalized;
-		if (Vector3.Magnitude(newVel * mouseSpeed * Time.deltaTime) > Vector3.Distance(point, this.gameObject.transform.position))
+		if ((mouseSpeed * Time.deltaTime) > Vector3.Distance(point, this.gameObject.transform.position))
 		{
 			newVel.z = 0f;
-			vel = newVel * mouseSpeed * Time.deltaTime; 
+			vel = newVel * mouseSpeed; 
 		}
 		else
 		{
 			vel = Vector3.zero;
+			this.gameObject.transform.position = new Vector3(point.x, point.y, this.gameObject.transform.position.z);
+			Debug.Log("At Target");
 		}
 		controller.Move(vel * Time.deltaTime);
 	}
