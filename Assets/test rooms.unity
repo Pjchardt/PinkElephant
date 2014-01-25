@@ -171,6 +171,8 @@ MonoBehaviour:
   roomGridWidth: 16
   roomGridHeight: 12
   roomScale: 2
+  roomsMin: 8
+  roomsMax: 8
   Floor: {fileID: 100000, guid: fbd6e5ec709017f47895263ae2368b7a, type: 2}
   Wall: {fileID: 100000, guid: 79567e9aea7039a4d9cc5782dda7eb77, type: 2}
   Door: {fileID: 100000, guid: 8e606bdbb56cf4e459f8b3205c483a02, type: 2}
@@ -204,7 +206,7 @@ Transform:
   m_GameObject: {fileID: 361139051}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1, y: 1, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: .5, y: .5, z: .5}
   m_Children:
   - {fileID: 865052454}
   m_Father: {fileID: 0}
@@ -391,6 +393,18 @@ Prefab:
     - target: {fileID: 2300000, guid: a0767b9089d34b54c9d989ce7a957e4f, type: 2}
       propertyPath: m_UseLightProbes
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: a0767b9089d34b54c9d989ce7a957e4f, type: 2}
+      propertyPath: m_LocalScale.x
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: a0767b9089d34b54c9d989ce7a957e4f, type: 2}
+      propertyPath: m_LocalScale.y
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: a0767b9089d34b54c9d989ce7a957e4f, type: 2}
+      propertyPath: m_LocalScale.z
+      value: .5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a0767b9089d34b54c9d989ce7a957e4f, type: 2}

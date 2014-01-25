@@ -10,6 +10,9 @@ public class GenerateRooms : MonoBehaviour
     public int roomGridHeight = 6;
     public int roomScale = 2;
 
+    public int roomsMin = 8;
+    public int roomsMax = 8;
+
     public GameObject Floor;
     public GameObject Wall;
     public GameObject Door;
@@ -18,7 +21,8 @@ public class GenerateRooms : MonoBehaviour
     public GameObject Enemy;
 
     byte[][] grid;
-    List<byte[][]> roomGrids;
+    List<byte[][]> roomGrids = new List<byte[][]>();
+    List<Vector3> roomPos = new List<Vector3>();
 
     GameObject player;
 
@@ -49,21 +53,75 @@ public class GenerateRooms : MonoBehaviour
                         break;
                     case 2: // Wall
                         //go = GameObject.Instantiate(Floor, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
-                        //go = GameObject.Instantiate(Wall, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
+                        go = GameObject.Instantiate(Wall, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
                         //go.renderer.material.color *= (float)roomGrid[i][j] / pcgb.rooms.Count;
                         break;
-                    /*case 3: // Door
+                    case 3: // Door
                         go = GameObject.Instantiate(Door, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
-                        go.renderer.material.color *= (float)roomGrid[i][j] / pcgb.rooms.Count;
-                        go.GetComponent<Door>().key = roomGrid[i][j] - 1;
+                        //go.renderer.material.color *= (float)roomGrid[i][j] / pcgb.rooms.Count;
+                        //go.GetComponent<Door>().key = roomGrid[i][j] - 1;
                         break;
-                    case 4: // Corridor
+                    /*case 4: // Corridor
                         //go = GameObject.Instantiate(Corridor, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
                         corridor.Add(new Vector2(i, j));
                         break;*/
                 }
             }
         }
+
+        for (int r = 0; r < roomGrids.Count; r++)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                int x = Random.Range(0, roomGrids[r].Length);
+                int y = Random.Range(0, roomGrids[r][x].Length);
+                roomGrids[r][x][y] = 1;
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                int x = Random.Range(0, roomGrids[r].Length);
+                int y = Random.Range(0, roomGrids[r][x].Length);
+                roomGrids[r][x][y] = 2;
+            }
+        }
+
+        for (int r = 0; r < roomGrids.Count; r++)
+        {
+            for (int i = 0; i < roomGrids[r].Length; i++)
+            {
+                for (int j = 0; j < roomGrids[r][i].Length; j++)
+                {
+                    // Render grid cell content
+                    switch (roomGrids[r][i][j])
+                    {
+                        case 0: // Empty
+                            //go = GameObject.Instantiate(Floor, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
+                            break;
+                        case 1: // Floor
+                            go = GameObject.Instantiate(Key, roomPos[r] + new Vector3(i, j, 0) / roomScale, Quaternion.identity) as GameObject;
+                            //go.renderer.material.color *= (float)roomGrid[i][j] / pcgb.rooms.Count;
+                            //floors[roomGrid[i][j] - 1].Add(new Vector2(i, j));
+                            break;
+                        case 2: // Wall
+                            go = GameObject.Instantiate(Enemy, roomPos[r] + new Vector3(i, j, 0) / roomScale, Quaternion.identity) as GameObject;
+                            //go = GameObject.Instantiate(Floor, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
+                            //go = GameObject.Instantiate(Wall, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
+                            //go.renderer.material.color *= (float)roomGrid[i][j] / pcgb.rooms.Count;
+                            break;
+                        case 3: // Door
+                            //go = GameObject.Instantiate(Door, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
+                            //go.renderer.material.color *= (float)roomGrid[i][j] / pcgb.rooms.Count;
+                            //go.GetComponent<Door>().key = roomGrid[i][j] - 1;
+                            break;
+                        /*case 4: // Corridor
+                            //go = GameObject.Instantiate(Corridor, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
+                            corridor.Add(new Vector2(i, j));
+                            break;*/
+                    }
+                }
+            }
+        }
+
         /*int ci = Random.Range(0, corridor.Count);
         player.transform.position = new Vector3(corridor[ci].x, corridor[ci].y, 0);
         corridor.RemoveAt(ci);
@@ -106,17 +164,21 @@ public class GenerateRooms : MonoBehaviour
         for (int i = 0; i < grid.Length; i++)
         {
             grid[i] = new byte[mapGridHeight * roomGridHeight];
-            for (int j = 0; j < grid[i].Length; j++)
-            {
-                grid[i][j] = 0;
-            }
         }
+
+        List<int> roomIndexes = new List<int>();
+        for (int i = 0; i < mapGridWidth * mapGridHeight; i++)
+            roomIndexes.Add(i);
+
+        int numRooms = Random.Range(roomsMin, roomsMax);
+        while (roomIndexes.Count > numRooms)
+            roomIndexes.RemoveAt(Random.Range(0, roomIndexes.Count));
 
         for (int i = 0; i < mapGridWidth; i++)
         {
             for (int j = 0; j < mapGridHeight; j++)
             {
-                if (Random.value > 0.5f)
+                if (roomIndexes.Contains(j * mapGridWidth + i))
                 {
                     int roomWidth = Random.Range(roomGridWidth - 4, roomGridWidth - 2);
                     int roomHeight = Random.Range(roomGridHeight - 4, roomGridHeight - 2);
@@ -129,41 +191,89 @@ public class GenerateRooms : MonoBehaviour
                             grid[startX + x][startY + y] = 1;
                         }
                     }
-                    //roomGrids.Add(new byte[][]);
+                    roomGrids.Add(new byte[roomWidth * roomScale][]);
+                    roomPos.Add(new Vector3(startX - 0.5f / roomScale, startY - 0.5f / roomScale, 0));
+                    for (int x = 0; x < roomGrids[roomGrids.Count - 1].Length; x++)
+                        roomGrids[roomGrids.Count - 1][x] = new byte[roomHeight * roomScale];
                 }
-                //else
+                if (i > 0)
                 {
-                    if (i > 0)
+                    int y = j * roomGridHeight + roomGridHeight / 2;
+                    for (int x = 0; x < roomGridWidth / 2 + 1; x++)
                     {
-                        int y = j * roomGridHeight + roomGridHeight / 2;
-                        for (int x = 0; x < roomGridWidth / 2; x++)
+                        if (grid[i * roomGridWidth + x + 1][y] == 1)
                         {
-                            grid[i * roomGridWidth + x][y] = 2;
+                            grid[i * roomGridWidth + x][y] = 3;
+                            grid[i * roomGridWidth + x][y - 1] = 3;
+                            break;
                         }
+                        int width = Random.Range(1, 4);
+                        if (width == 3)
+                            for (int w = 0; w < width; w++)
+                                grid[i * roomGridWidth + x][y - w + 1] = 2;
+                        else
+                            for (int w = 0; w < width; w++)
+                                grid[i * roomGridWidth + x][y - w] = 2;
                     }
-                    if (i < mapGridWidth - 1)
+                }
+                if (i < mapGridWidth - 1)
+                {
+                    int y = j * roomGridHeight + roomGridHeight / 2;
+                    for (int x = roomGridWidth - 1; x >= roomGridWidth / 2 - 1; x--)
                     {
-                        int y = j * roomGridHeight + roomGridHeight / 2;
-                        for (int x = roomGridWidth / 2; x < roomGridWidth; x++)
+                        if (grid[i * roomGridWidth + x - 1][y] == 1)
                         {
-                            grid[i * roomGridWidth + x][y] = 2;
+                            grid[i * roomGridWidth + x][y] = 3;
+                            grid[i * roomGridWidth + x][y - 1] = 3;
+                            break;
                         }
+                        int width = Random.Range(1, 4);
+                        if (width == 3)
+                            for (int w = 0; w < width; w++)
+                                grid[i * roomGridWidth + x][y - w + 1] = 2;
+                        else
+                            for (int w = 0; w < width; w++)
+                                grid[i * roomGridWidth + x][y - w] = 2;
                     }
-                    if (j > 0)
+                }
+                if (j > 0)
+                {
+                    int x = i * roomGridWidth + roomGridWidth / 2;
+                    for (int y = 0; y < roomGridHeight / 2 + 1; y++)
                     {
-                        int x = i * roomGridWidth + roomGridWidth / 2;
-                        for (int y = 0; y < roomGridHeight / 2; y++)
+                        if (grid[x][j * roomGridHeight + y + 1] == 1)
                         {
-                            grid[x][j * roomGridHeight + y] = 2;
+                            grid[x][j * roomGridHeight + y] = 3;
+                            grid[x - 1][j * roomGridHeight + y] = 3;
+                            break;
                         }
+                        int width = Random.Range(1, 4);
+                        if (width == 3)
+                            for (int w = 0; w < width; w++)
+                                grid[x - w + 1][j * roomGridHeight + y] = 2;
+                        else
+                            for (int w = 0; w < width; w++)
+                                grid[x - w][j * roomGridHeight + y] = 2;
                     }
-                    if (j < mapGridHeight - 1)
+                }
+                if (j < mapGridHeight - 1)
+                {
+                    int x = i * roomGridWidth + roomGridWidth / 2;
+                    for (int y = roomGridHeight - 1; y >= roomGridHeight / 2 - 1; y--)
                     {
-                        int x = i * roomGridWidth + roomGridWidth / 2;
-                        for (int y = roomGridHeight / 2; y < roomGridHeight; y++)
+                        if (grid[x][j * roomGridHeight + y - 1] == 1)
                         {
-                            grid[x][j * roomGridHeight + y] = 2;
+                            grid[x][j * roomGridHeight + y] = 3;
+                            grid[x - 1][j * roomGridHeight + y] = 3;
+                            break;
                         }
+                        int width = Random.Range(1, 4);
+                        if (width == 3)
+                            for (int w = 0; w < width; w++)
+                                grid[x - w + 1][j * roomGridHeight + y] = 2;
+                        else
+                            for (int w = 0; w < width; w++)
+                                grid[x - w][j * roomGridHeight + y] = 2;
                     }
                 }
             }
