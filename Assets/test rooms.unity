@@ -166,14 +166,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 072a28d28b7b6104e8a599f344df6654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  areaWidth: 9.75
-  areaHeight: 7.25
-  room_min_size: 9
-  room_max_size: 16
-  corridor_num: 2
-  corridor_weight: 4
-  turning_weight: 4
-  room_type: 0
+  mapGridWidth: 4
+  mapGridHeight: 4
+  roomGridWidth: 16
+  roomGridHeight: 12
+  roomScale: 2
   Floor: {fileID: 100000, guid: fbd6e5ec709017f47895263ae2368b7a, type: 2}
   Wall: {fileID: 100000, guid: 79567e9aea7039a4d9cc5782dda7eb77, type: 2}
   Door: {fileID: 100000, guid: 8e606bdbb56cf4e459f8b3205c483a02, type: 2}
@@ -206,7 +203,7 @@ Transform:
   m_PrefabInternal: {fileID: 1747977226}
   m_GameObject: {fileID: 361139051}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: -1, z: 0}
+  m_LocalPosition: {x: 1, y: 1, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 865052454}
@@ -345,15 +342,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400002, guid: a0767b9089d34b54c9d989ce7a957e4f, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: a0767b9089d34b54c9d989ce7a957e4f, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: a0767b9089d34b54c9d989ce7a957e4f, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: a0767b9089d34b54c9d989ce7a957e4f, type: 2}
       propertyPath: m_LocalRotation.x

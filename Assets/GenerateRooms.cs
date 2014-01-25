@@ -118,8 +118,8 @@ public class GenerateRooms : MonoBehaviour
             {
                 if (Random.value > 0.5f)
                 {
-                    int roomWidth = Random.Range(roomGridWidth / 2, roomGridWidth - 2);
-                    int roomHeight = Random.Range(roomGridHeight / 2, roomGridHeight - 2);
+                    int roomWidth = Random.Range(roomGridWidth - 4, roomGridWidth - 2);
+                    int roomHeight = Random.Range(roomGridHeight - 4, roomGridHeight - 2);
                     int startX = i * roomGridWidth + (roomGridWidth - roomWidth) / 2;
                     int startY = j * roomGridHeight + (roomGridHeight - roomHeight) / 2;
                     for (int x = 0; x < roomWidth; x++)
