@@ -56,7 +56,7 @@ public class GenerateRooms : MonoBehaviour
                         break;
                     case 2: // Wall
                         //go = GameObject.Instantiate(Floor, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
-                        go = GameObject.Instantiate(Wall, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
+                        //go = GameObject.Instantiate(Wall, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
                         //go.renderer.material.color *= (float)roomGrid[i][j] / pcgb.rooms.Count;
                         break;
                     case 3: // Door
@@ -125,6 +125,8 @@ public class GenerateRooms : MonoBehaviour
             }
         }
 
+        player.transform.position = roomPos[0] + new Vector3(roomGrids[0].Length / 2, roomGrids[0][0].Length / 2, 0) / roomScale;
+
         /*int ci = Random.Range(0, corridor.Count);
         player.transform.position = new Vector3(corridor[ci].x, corridor[ci].y, 0);
         corridor.RemoveAt(ci);
@@ -143,7 +145,9 @@ public class GenerateRooms : MonoBehaviour
         }*/
 
         this.camera.orthographicSize = roomGridHeight / 2f;
-        this.transform.position = new Vector3(roomGridWidth / 2f - 0.5f, roomGridHeight / 2f - 0.5f, this.transform.position.z);
+        this.transform.position = new Vector3(roomGridWidth / 2f - 0.5f + (int)(player.transform.position.x / roomGridWidth) * roomGridWidth,
+            roomGridHeight / 2f - 0.5f + (int)(player.transform.position.y / roomGridHeight) * roomGridHeight,
+            this.transform.position.z);
         //this.camera.orthographicSize = roomGridHeight * mapGridHeight / 2f;
         //this.transform.position = new Vector3(roomGridWidth * mapGridWidth / 2f - 0.5f, roomGridHeight * mapGridHeight / 2f - 0.5f, this.transform.position.z);
     }
