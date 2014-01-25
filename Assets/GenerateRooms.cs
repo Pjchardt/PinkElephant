@@ -24,13 +24,21 @@ public class GenerateRooms : MonoBehaviour
     List<byte[][]> roomGrids = new List<byte[][]>();
     List<Vector3> roomPos = new List<Vector3>();
 
-    GameObject player;
+    public static GameObject player;
 	private bool movingCamera = false;
 	private Vector3 cameraTarget;
 	public float CameraSpeed = 50f;
 
+    public static int mapX;
+    public static int mapY;
+    public static int roomGridWidthStatic;
+    public static int roomGridHeightStatic;
+
     void Start()
     {
+        roomGridWidthStatic = roomGridWidth;
+        roomGridHeightStatic = roomGridHeight;
+
         generateWorld();
 
         player = GameObject.Find("Player");
@@ -126,6 +134,8 @@ public class GenerateRooms : MonoBehaviour
         }
 
         player.transform.position = roomPos[0] + new Vector3(roomGrids[0].Length / 2, roomGrids[0][0].Length / 2, 0) / roomScale;
+        mapX = (int)(player.transform.position.x / roomGridWidth);
+        mapY = (int)(player.transform.position.y / roomGridHeight);
 
         /*int ci = Random.Range(0, corridor.Count);
         player.transform.position = new Vector3(corridor[ci].x, corridor[ci].y, 0);
@@ -145,8 +155,8 @@ public class GenerateRooms : MonoBehaviour
         }*/
 
         this.camera.orthographicSize = roomGridHeight / 2f;
-        this.transform.position = new Vector3(roomGridWidth / 2f - 0.5f + (int)(player.transform.position.x / roomGridWidth) * roomGridWidth,
-            roomGridHeight / 2f - 0.5f + (int)(player.transform.position.y / roomGridHeight) * roomGridHeight,
+        this.transform.position = new Vector3(roomGridWidth / 2f - 0.5f + mapX * roomGridWidth,
+            roomGridHeight / 2f - 0.5f + mapY * roomGridHeight,
             this.transform.position.z);
         //this.camera.orthographicSize = roomGridHeight * mapGridHeight / 2f;
         //this.transform.position = new Vector3(roomGridWidth * mapGridWidth / 2f - 0.5f, roomGridHeight * mapGridHeight / 2f - 0.5f, this.transform.position.z);
@@ -301,6 +311,7 @@ public class GenerateRooms : MonoBehaviour
 	{
 		if (player.transform.position.x > transform.position.x + roomGridWidth / 2f)
 		{
+            mapX++;
 			movingCamera = true;
 			player.GetComponent<Player>().PausePlayer(true);
 			cameraTarget = transform.position + new Vector3(roomGridWidth, 0, 0);
@@ -308,6 +319,7 @@ public class GenerateRooms : MonoBehaviour
 		}
 		else if (player.transform.position.x < transform.position.x - roomGridWidth / 2f)
 		{
+            mapX--;
 			movingCamera = true;
 			player.GetComponent<Player>().PausePlayer(true);
 			cameraTarget = transform.position - new Vector3(roomGridWidth, 0, 0);
@@ -316,6 +328,7 @@ public class GenerateRooms : MonoBehaviour
 		
 		if (player.transform.position.y > transform.position.y + roomGridHeight / 2f)
 		{
+            mapY++;
 			movingCamera = true;
 			player.GetComponent<Player>().PausePlayer(true);
 			cameraTarget = transform.position + new Vector3(0, roomGridHeight, 0);
@@ -323,6 +336,7 @@ public class GenerateRooms : MonoBehaviour
 		}
 		else if (player.transform.position.y < transform.position.y - roomGridHeight / 2f)
 		{
+            mapY--;
 			movingCamera = true;
 			player.GetComponent<Player>().PausePlayer(true);
 			cameraTarget = transform.position - new Vector3(0, roomGridHeight, 0);
