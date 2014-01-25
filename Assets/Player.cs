@@ -181,7 +181,7 @@ public class Player : MonoBehaviour
 	{
 		newMousePosition = Input.mousePosition;
 		//Vector3 mouseDelta = newMousePosition - oldMousePosition; 
-		Vector3 mouseDelta = new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0f) * 20f;
+		Vector3 mouseDelta = new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0f) * 15f;
 		currentMousePosition = currentMousePosition * (4f * Time.deltaTime) + (currentMousePosition + mouseDelta) * (1f - 4f * Time.deltaTime);
 		oldMousePosition = newMousePosition;
 		Debug.Log (currentMousePosition);
@@ -193,7 +193,7 @@ public class Player : MonoBehaviour
 		Vector3 point = ray.origin + (ray.direction * distance);
 
 		Vector3 newVel = (point - this.gameObject.transform.position).normalized;
-		if ((mouseSpeed * Time.deltaTime) > Vector3.Distance(point, this.gameObject.transform.position))
+		if ((mouseSpeed * Time.deltaTime) < Vector3.Distance(point, this.gameObject.transform.position))
 		{
 			newVel.z = 0f;
 			vel = newVel * mouseSpeed; 
@@ -201,7 +201,7 @@ public class Player : MonoBehaviour
 		else
 		{
 			vel = Vector3.zero;
-			this.gameObject.transform.position = new Vector3(point.x, point.y, this.gameObject.transform.position.z);
+			//this.gameObject.transform.position = new Vector3(point.x, point.y, this.gameObject.transform.position.z);
 			Debug.Log("At Target");
 		}
 		controller.Move(vel * Time.deltaTime);
