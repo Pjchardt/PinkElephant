@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
 	public AudioClip WASDMusic;
 	public AudioClip MouseMusic;
 	public AudioClip MouseGunMusic;
+	public AudioClip WASDWeapon;
 
     public GenerateRooms generater;
     bool hasWeapon = false;
@@ -151,6 +152,9 @@ public class Player : MonoBehaviour
 
 				Camera.main.isOrthoGraphic = false;
 				floor.SetActive(true);
+				this.audio.clip = WASDWeapon;
+				this.audio.Play();
+				//GameObject.Find("Directional light").light.enabled = false;
                 this.gameObject.transform.FindChild("SpinMelee").gameObject.SetActive(true);
 			}
         }
