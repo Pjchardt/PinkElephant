@@ -18,7 +18,7 @@ RenderSettings:
   m_FogDensity: .00999999978
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientLight: {r: 1, g: 1, b: 1, a: 1}
+  m_AmbientLight: {r: 0, g: 0, b: 0, a: 1}
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: .5
   m_FlareStrength: 1
@@ -124,7 +124,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
+  m_BackGroundColor: {r: .0873702392, g: .0925903767, b: .117647052, a: 1}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -427,7 +427,7 @@ Light:
   serializedVersion: 3
   m_Type: 1
   m_Color: {r: .904575825, g: .91911763, b: .655547142, a: 1}
-  m_Intensity: .460000008
+  m_Intensity: .25
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
