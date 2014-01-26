@@ -50,6 +50,7 @@ public class Player : MonoBehaviour
 
     public GenerateRooms generater;
     bool hasWeapon = false;
+	public GameObject floor;
 
     public bool throughDoor = false;
 
@@ -138,10 +139,20 @@ public class Player : MonoBehaviour
                 Camera.main.GetComponent<Bloom>().enabled = true;
                 Camera.main.GetComponent<GlowEffect>().enabled = true;
             }
-            else
-            {
+			else if (currentMethod == InputMethod.KeyboardControl)
+			{
+				GameObject [] allWalls = GameObject.FindGameObjectsWithTag("Wall");
+				for (int ct = 0; ct < allWalls.Length; ct++)
+				{
+					Vector3 temp = allWalls[ct].transform.localScale;
+					temp.z += Random.Range(1f, 5f);
+					allWalls[ct].transform.localScale = temp;
+				}
+
+				Camera.main.isOrthoGraphic = false;
+				floor.SetActive(true);
                 this.gameObject.transform.FindChild("SpinMelee").gameObject.SetActive(true);
-            }
+			}
         }
     }
 
@@ -204,6 +215,13 @@ public class Player : MonoBehaviour
 				HealthModifier = 5f;
 				this.gameObject.audio.clip = WASDMusic;
 				this.gameObject.audio.Play();
+
+				GameObject [] allKeys = GameObject.FindGameObjectsWithTag("Key");
+				for (int ct = 0; ct < allKeys.Length; ct++)
+				{
+					Destroy(allKeys[ct]);
+				}
+
 				return;
 			}
 

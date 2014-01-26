@@ -200,6 +200,7 @@ public class GenerateRooms : MonoBehaviour
             addNum = 4;
         else
             addNum = 12;
+        Debug.Log(addNum);
         for (int r = 1; r < roomGrids.Count; r++)
         {
             for (int i = 0; i < addNum; i++)
