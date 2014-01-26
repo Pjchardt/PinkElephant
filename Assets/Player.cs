@@ -126,24 +126,28 @@ public class Player : MonoBehaviour
             GameObject.Destroy(col.gameObject);
 			//have valuye passed in to AddEnemies with the enemy multiplier
             generater.AddEnemies();
-            GameObject go = GameObject.Instantiate(weapon) as GameObject;
+            /*GameObject go = GameObject.Instantiate(weapon) as GameObject;
             go.transform.parent = this.transform;
-            go.transform.localPosition = new Vector3(0.5f, 0, 0);
-			if (currentMethod == InputMethod.MouseControl)
-			{
-				this.gameObject.transform.FindChild("mouse").GetComponent<TrailRenderer>().enabled = false;
-				this.gameObject.transform.FindChild("AutoAimGun").gameObject.SetActive(true);
-				this.gameObject.audio.clip = MouseGunMusic;
-				this.gameObject.audio.Play();
-				Camera.main.GetComponent<Bloom>().enabled = true;
-				Camera.main.GetComponent<GlowEffect>().enabled = true;
-			}
+            go.transform.localPosition = new Vector3(0.5f, 0, 0);*/
+            if (currentMethod == InputMethod.MouseControl)
+            {
+                this.gameObject.transform.FindChild("mouse").GetComponent<TrailRenderer>().enabled = false;
+                this.gameObject.transform.FindChild("AutoAimGun").gameObject.SetActive(true);
+                this.gameObject.audio.clip = MouseGunMusic;
+                this.gameObject.audio.Play();
+                Camera.main.GetComponent<Bloom>().enabled = true;
+                Camera.main.GetComponent<GlowEffect>().enabled = true;
+            }
+            else
+            {
+                this.gameObject.transform.FindChild("SpinMelee").gameObject.SetActive(true);
+            }
         }
     }
 
     void OnCollisionEnter(Collision col)
     {
-        Debug.Log(col.gameObject);
+        //Debug.Log(col.gameObject);
         if (col.gameObject.tag == "Door")
         {
             throughDoor = true;
