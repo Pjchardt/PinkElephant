@@ -150,8 +150,9 @@ public class GenerateRooms : MonoBehaviour
                             //go.renderer.material.color *= (float)roomGrid[i][j] / pcgb.rooms.Count;
                             break;
                         case 3: // Door
-                            go = GameObject.Instantiate(Goal, roomPos[r] + new Vector3(i, j, 0) / roomScale, Quaternion.identity) as GameObject;
+                            go = GameObject.Instantiate(Goal, roomPos[r] + new Vector3(i, j, 0) / roomScale, Goal.transform.localRotation) as GameObject;
                             go.transform.parent = map;
+                            player.goal = go.GetComponent<Goal>();
                             //go = GameObject.Instantiate(Door, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
                             //go.renderer.material.color *= (float)roomGrid[i][j] / pcgb.rooms.Count;
                             //go.GetComponent<Door>().key = roomGrid[i][j] - 1;

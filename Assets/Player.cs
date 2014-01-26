@@ -65,6 +65,8 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public bool timeRunning;
 
+    public Goal goal;
+
     void Start()
     {
         score = 0;
@@ -139,11 +141,12 @@ public class Player : MonoBehaviour
             GameObject.Destroy(col.gameObject);
             score++;
             remaining--;
+            if (remaining <= 0)
+                goal.Unlock();
         }
         else if (col.gameObject.tag == "Goal")
         {
-            if (currentMethod != InputMethod.MouseControl || remaining == 0)
-            col.gameObject.GetComponent<Goal>().FinishGame();
+            goal.FinishGame();
         }
         else if (col.gameObject.tag == "Weapon")
         {
@@ -181,6 +184,7 @@ public class Player : MonoBehaviour
 				this.audio.Play();
 				//GameObject.Find("Directional light").light.enabled = false;
                 this.gameObject.transform.FindChild("SpinMelee").gameObject.SetActive(true);
+                rigidbody.freezeRotation = true;
 			}
         }
     }
@@ -203,59 +207,62 @@ public class Player : MonoBehaviour
 		for (int i = 0; i < qwerty.GetLength(0); i++)
 			for (int j = 0; j < qwerty.GetLength(1); j++)
 				if (Input.GetKeyDown(qwerty[i, j].ToString()))
-			{
-				wasd = new char[4];
+			    {
+				    wasd = new char[4];
 				
-				if (i == 0)
-					i = 1;
+				    if (i == 0)
+					    i = 1;
 				
-				if (j == 0)
-					j = 1;
-				if (j == qwerty.GetLength(1) - 1)
-					j = qwerty.GetLength(1) - 2;
+				    if (j == 0)
+					    j = 1;
+				    if (j == qwerty.GetLength(1) - 1)
+					    j = qwerty.GetLength(1) - 2;
 				
-				wasd[0] = qwerty[i - 1, j];
-				wasd[1] = qwerty[i, j - 1];
-				wasd[2] = qwerty[i, j];
-				wasd[3] = qwerty[i, j + 1];
+				    wasd[0] = qwerty[i - 1, j];
+				    wasd[1] = qwerty[i, j - 1];
+				    wasd[2] = qwerty[i, j];
+				    wasd[3] = qwerty[i, j + 1];
 
-                pink.SetActive(false);
-                map.SetActive(true);
+                    pink.SetActive(false);
+                    map.SetActive(true);
 
-				currentMethod = InputMethod.KeyboardControl;
-				currentState = InputState.Moving;
-				//Debug.Log ("KeyboardControl");
-				float inputDelay = Time.timeSinceLevelLoad - startTime;
-				inputDelay /= 5f;
-				inputDelay = Mathf.Clamp(inputDelay, 0f, 1f);
-				Time.timeScale = 1.2f;
+				    currentMethod = InputMethod.KeyboardControl;
+				    currentState = InputState.Moving;
+				    //Debug.Log ("KeyboardControl");
+				    float inputDelay = Time.timeSinceLevelLoad - startTime;
+				    inputDelay /= 5f;
+				    inputDelay = Mathf.Clamp(inputDelay, 0f, 1f);
+				    Time.timeScale = 1.2f;
 
-				WASDObject.SetActive(true);
-				this.gameObject.renderer.enabled = false;
+				    WASDObject.SetActive(true);
+				    this.gameObject.renderer.enabled = false;
 
-				GameObject [] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
-				for (int ct = 0; ct < allEnemies.Length; ct++)
-				{
-					allEnemies[ct].GetComponent<Enemy>().speed *= .4f;
-					allEnemies[ct].transform.localScale *= 4f;
-					allEnemies[ct].transform.FindChild("enemy").gameObject.SetActive(true);
-					allEnemies[ct].transform.FindChild("mouseEnemy").gameObject.SetActive(false);
-				}
-				HealthModifier = 5f;
-				this.gameObject.audio.clip = WASDMusic;
-				this.gameObject.audio.Play();
+				    GameObject [] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+				    for (int ct = 0; ct < allEnemies.Length; ct++)
+				    {
+					    allEnemies[ct].GetComponent<Enemy>().speed *= .4f;
+					    allEnemies[ct].transform.localScale *= 4f;
+					    allEnemies[ct].transform.FindChild("enemy").gameObject.SetActive(true);
+					    allEnemies[ct].transform.FindChild("mouseEnemy").gameObject.SetActive(false);
+				    }
+				    HealthModifier = 5f;
+				    this.gameObject.audio.clip = WASDMusic;
+				    this.gameObject.audio.Play();
 
-				GameObject [] allKeys = GameObject.FindGameObjectsWithTag("Key");
-				for (int ct = 0; ct < allKeys.Length; ct++)
-				{
-					Destroy(allKeys[ct]);
-				}
-				GameObject temp = new GameObject();
-				temp.AddComponent<AudioSource>();
-				temp.audio.PlayOneShot(startGame);
-				Destroy(temp, startGame.length);
-				return;
-			}
+				    GameObject [] allKeys = GameObject.FindGameObjectsWithTag("Key");
+				    for (int ct = 0; ct < allKeys.Length; ct++)
+				    {
+					    Destroy(allKeys[ct]);
+				    }
+				    GameObject temp = new GameObject();
+				    temp.AddComponent<AudioSource>();
+				    temp.audio.PlayOneShot(startGame);
+				    Destroy(temp, startGame.length);
+
+                    goal.Unlock();
+
+				    return;
+			    }
 
 		if ( Input.GetAxis ("Mouse X") > .5 || Input.GetAxis("Mouse Y") > .5)
         {
