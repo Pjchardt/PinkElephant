@@ -5,6 +5,7 @@ public class Health : MonoBehaviour
 {
 	public float health;
 	public Texture blackTexture;
+	public Color overlayColor = new Color(0, 0, 0, 0);
 	// Use this for initialization
 	void Start () 
 	{
@@ -14,8 +15,8 @@ public class Health : MonoBehaviour
 	void OnGUI()
 	{
 		float alphaFadeValue = (100f - health) / 100f;
-		
-		GUI.color = new Color(0, 0, 0, alphaFadeValue);
+		overlayColor.a = alphaFadeValue;
+		GUI.color = overlayColor;
 		GUI.DrawTexture( new Rect(0, 0, Screen.width, Screen.height ), blackTexture );
 	}
 
@@ -32,12 +33,13 @@ public class Health : MonoBehaviour
 			}
 		}
 
-		this.gameObject.audio.volume = .25f + ((100f - health)/100f) * .75f;
+		this.gameObject.audio.volume = .5f + ((100f - health)/100f) * .5f;
 	}
 
 	public void ChangeHealth(float delta)
 	{
-		health += delta;
+
+		health += delta * this.gameObject.GetComponent<Player>().HealthModifier;
 
 		if (health <= 0)
 		{

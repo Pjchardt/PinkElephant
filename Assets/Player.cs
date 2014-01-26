@@ -38,6 +38,12 @@ public class Player : MonoBehaviour
 	public Texture cursorImage;
 
 	private float startTime;
+	public float HealthModifier = 1f;
+
+	public AudioClip coin;
+	public AudioClip door;
+	public AudioClip WASDMusic;
+	public AudioClip MouseMusic;
 
     void Start()
     {
@@ -98,6 +104,7 @@ public class Player : MonoBehaviour
         */
         if (col.gameObject.tag == "Key")
         {
+			this.gameObject.audio.PlayOneShot(coin, .75f);
             GameObject.Destroy(col.gameObject);
             score++;
         }
@@ -113,6 +120,7 @@ public class Player : MonoBehaviour
         if (col.gameObject.tag == "Door")
         {
             Door dc = col.gameObject.GetComponent<Door>();
+			this.gameObject.audio.PlayOneShot(door, .75f);
             //if (keys.Contains(dc.key))
             GameObject.Destroy(col.gameObject);
         }
@@ -158,8 +166,12 @@ public class Player : MonoBehaviour
 				{
 					allEnemies[ct].GetComponent<Enemy>().speed *= .4f;
 					allEnemies[ct].transform.localScale *= 4f;
+					allEnemies[ct].transform.FindChild("enemy").gameObject.SetActive(true);
+					allEnemies[ct].transform.FindChild("mouseEnemy").gameObject.SetActive(false);
 				}
-
+				HealthModifier = 5f;
+				this.gameObject.audio.clip = WASDMusic;
+				this.gameObject.audio.Play();
 				return;
 			}
 
@@ -177,7 +189,12 @@ public class Player : MonoBehaviour
 			Time.timeScale = 1.2f - inputDelay;
 			MouseObject.SetActive(true);
 			this.gameObject.renderer.enabled = false;
-			GameObject.Find("Directional light").light.intensity = .75f;
+			GameObject.Find("Directional light").light.intensity = .9f;
+			GameObject.Find("Directional light").light.color = new Color(.975f, 1f, .025f);
+			Camera.main.backgroundColor = new Color(.025f, .25f, .7f);
+			this.gameObject.GetComponent<Health>().overlayColor = new Color(.75f, 1f, .35f);
+			this.gameObject.audio.clip = MouseMusic;
+			this.gameObject.audio.Play();
 			//Debug.Log( Input.GetAxis ("Mouse X") + " : " +  Input.GetAxis("Mouse Y"));
 			//Debug.Log ("MouseControl");
 		}
@@ -316,4 +333,5 @@ public class Player : MonoBehaviour
 			currentState = InputState.Moving;
 		}
 	}
+	
 }
