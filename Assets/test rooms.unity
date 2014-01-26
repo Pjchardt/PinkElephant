@@ -181,6 +181,7 @@ MonoBehaviour:
   Key: {fileID: 100000, guid: 8976f3cb06c919a4789317146548a8a3, type: 2}
   Enemy: {fileID: 100002, guid: 3fc5f5705946d9747bbb91e4ba6b18e8, type: 2}
   Goal: {fileID: 100000, guid: c3751736022121140b6c93162ca1c1da, type: 2}
+  Fire: {fileID: 100002, guid: 74c8284510690c0498a758ceb001fc34, type: 2}
   CameraSpeed: 25
 --- !u!1 &361139051
 GameObject:
@@ -396,7 +397,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1137451350}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.748106, y: 15.2914333, z: 22.2925415}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

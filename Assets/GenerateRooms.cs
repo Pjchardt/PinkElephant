@@ -22,6 +22,7 @@ public class GenerateRooms : MonoBehaviour
     public GameObject Key;
     public GameObject Enemy;
     public GameObject Goal;
+    public GameObject Fire;
 
     byte[][] grid;
     List<byte[][]> roomGrids = new List<byte[][]>();
@@ -79,10 +80,14 @@ public class GenerateRooms : MonoBehaviour
                         //go.renderer.material.color *= (float)roomGrid[i][j] / pcgb.rooms.Count;
                         //go.GetComponent<Door>().key = roomGrid[i][j] - 1;
                         break;
-                    /*case 4: // Corridor
+                    case 4: // Corridor
+                        go = GameObject.Instantiate(Floor, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
+                        go.transform.parent = map;
+                        go = GameObject.Instantiate(Fire, new Vector3(i, j, -1), Quaternion.Euler(180, 0, 0)) as GameObject;
+                        go.transform.parent = map;
                         //go = GameObject.Instantiate(Corridor, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
-                        corridor.Add(new Vector2(i, j));
-                        break;*/
+                        //corridor.Add(new Vector2(i, j));
+                        break;
                 }
             }
         }
@@ -227,6 +232,21 @@ public class GenerateRooms : MonoBehaviour
                             grid[startX + x][startY + y] = 1;
                         }
                     }
+
+                    int fireNum = Random.Range(1, 5);
+                    for (int f = 0; f < fireNum; f++)
+                    {
+                        int d = Random.Range(0, 4);
+                        if (d == 0)
+                            grid[startX - 1][startY + Random.Range(0, roomHeight)] = 4;
+                        else if (d == 1)
+                            grid[startX + roomWidth][startY + Random.Range(0, roomHeight)] = 4;
+                        else if (d == 2)
+                            grid[startX + Random.Range(0, roomWidth)][startY - 1] = 4;
+                        else if (d == 3)
+                            grid[startX + Random.Range(0, roomWidth)][startY + roomHeight] = 4;
+                    }
+
                     roomGrids.Add(new byte[roomWidth * roomScale][]);
                     roomPos.Add(new Vector3(startX - 0.5f / roomScale, startY - 0.5f / roomScale, 0));
                     for (int x = 0; x < roomGrids[roomGrids.Count - 1].Length; x++)
