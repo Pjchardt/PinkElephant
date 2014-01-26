@@ -195,9 +195,14 @@ public class GenerateRooms : MonoBehaviour
 
     public void AddEnemies()
     {
+        int addNum;
+        if (player.currentMethod == Player.InputMethod.KeyboardControl)
+            addNum = 4;
+        else
+            addNum = 12;
         for (int r = 1; r < roomGrids.Count; r++)
         {
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < addNum; i++)
             {
                 int x = Random.Range(0, roomGrids[r].Length);
                 int y = Random.Range(0, roomGrids[r][x].Length);
