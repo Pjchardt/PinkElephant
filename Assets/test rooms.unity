@@ -179,6 +179,7 @@ MonoBehaviour:
   Corridor: {fileID: 100000, guid: 7e758f510759cfb4db6c8d6554c739cc, type: 2}
   Key: {fileID: 100000, guid: 8976f3cb06c919a4789317146548a8a3, type: 2}
   Enemy: {fileID: 100002, guid: 3fc5f5705946d9747bbb91e4ba6b18e8, type: 2}
+  Goal: {fileID: 100000, guid: c3751736022121140b6c93162ca1c1da, type: 2}
   CameraSpeed: 25
 --- !u!1 &361139051
 GameObject:
@@ -191,9 +192,10 @@ GameObject:
   - 33: {fileID: 361139057}
   - 23: {fileID: 361139055}
   - 114: {fileID: 361139054}
-  - 143: {fileID: 361139053}
   - 114: {fileID: 361139056}
   - 114: {fileID: 361139058}
+  - 54: {fileID: 361139059}
+  - 135: {fileID: 361139053}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -214,21 +216,18 @@ Transform:
   - {fileID: 1218071234}
   - {fileID: 1496144089}
   m_Father: {fileID: 0}
---- !u!143 &361139053
-CharacterController:
+--- !u!135 &361139053
+SphereCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 14300000, guid: a0767b9089d34b54c9d989ce7a957e4f,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 361139051}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Height: .400000006
-  m_Radius: .400000006
-  m_SlopeLimit: 45
-  m_StepOffset: .300000012
-  m_SkinWidth: 9.99999975e-05
-  m_MinMoveDistance: 0
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: .500000119
+  m_Center: {x: 5.96046448e-08, y: 0, z: -8.94069672e-08}
 --- !u!114 &361139054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,8 +242,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   index: 0
   speed: 5
-  ladders: 0
-  score: 0
   mouseSpeed: 20
   WASDObject: {fileID: 1218071233}
   MouseObject: {fileID: 1496144088}
@@ -303,6 +300,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   blackTexture: {fileID: 2800000, guid: dda1e044dd67448cbb2d2f840d0d9a97, type: 3}
+--- !u!54 &361139059
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 361139051}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: .0500000007
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 8
+  m_CollisionDetection: 0
 --- !u!1001 &875470816
 Prefab:
   m_ObjectHideFlags: 0
@@ -445,7 +457,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400000, guid: c37b29302018249d2ac66337f0c6b2c0, type: 3}
   m_PrefabInternal: {fileID: 1362974759}
   m_GameObject: {fileID: 1218071233}
-  m_LocalRotation: {x: -.707106829, y: 0, z: -0, w: .707106709}
+  m_LocalRotation: {x: -.707106888, y: 0, z: -0, w: .707106769}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
   m_Children: []
