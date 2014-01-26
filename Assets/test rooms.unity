@@ -185,7 +185,6 @@ MonoBehaviour:
   Fire: {fileID: 100002, guid: 74c8284510690c0498a758ceb001fc34, type: 2}
   FirstRoom: {fileID: 100000, guid: d6043ce8e94804d44b55c226a34ab9f0, type: 2}
   CameraSpeed: 25
-  throughDoor: 0
 --- !u!1 &361139051
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,6 +252,7 @@ MonoBehaviour:
   weapon: {fileID: 100000, guid: 42925ebac5b94eb419666ded0419f18d, type: 2}
   index: 0
   speed: 5
+  currentState: 0
   currentMethod: 0
   mouseSpeed: 20
   WASDObject: {fileID: 1218071233}
@@ -264,6 +264,7 @@ MonoBehaviour:
   WASDMusic: {fileID: 8300000, guid: 9bb114ae9297746dabed1c31af95c9cf, type: 3}
   MouseMusic: {fileID: 8300000, guid: 126ce35e9235b4e4ead264265765b419, type: 3}
   generater: {fileID: 55611933}
+  throughDoor: 0
 --- !u!23 &361139055
 Renderer:
   m_ObjectHideFlags: 0

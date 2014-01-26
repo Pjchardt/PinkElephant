@@ -197,7 +197,7 @@ public class GenerateRooms : MonoBehaviour
     {
         for (int r = 1; r < roomGrids.Count; r++)
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 12; i++)
             {
                 int x = Random.Range(0, roomGrids[r].Length);
                 int y = Random.Range(0, roomGrids[r][x].Length);

@@ -8,11 +8,11 @@ public class AutoAimGun : MonoBehaviour
 
 	public GameObject Bullet;
 	Vector3 target;
+    GameObject[] activeEnemies;
 
 	// Use this for initialization
 	void Start () 
 	{
-	
 	}
 	
 	// Update is called once per frame
@@ -29,17 +29,21 @@ public class AutoAimGun : MonoBehaviour
 
 	void Fire()
 	{
-		GameObject[] activeEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+		activeEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+
 		if (activeEnemies.Length < 1)
 		{
 			return;
 		}
 		target = activeEnemies[0].transform.position;
+        float minDist = (target - this.gameObject.transform.position).magnitude;
 		for (int i = 1; i < activeEnemies.Length; i++)
 		{
-			if ((activeEnemies[i].transform.position - this.gameObject.transform.position).magnitude < (target - this.gameObject.transform.position).magnitude)
+            float dist = (activeEnemies[i].transform.position - this.gameObject.transform.position).magnitude;
+			if (dist < minDist)
 			{
 				target = activeEnemies[i].transform.position;
+                minDist = dist;
 			}                                                                                         
 		}
 
