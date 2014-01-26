@@ -52,7 +52,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 1, y: 0, z: 0, w: -1.62920685e-07}
-  m_LocalPosition: {x: 0, y: 1, z: -2}
+  m_LocalPosition: {x: 3.33971453, y: 1.29273987, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400000}
@@ -68,7 +68,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: .779310346, b: .0588235259, a: 1}
   m_Intensity: .5
-  m_Range: 12
+  m_Range: 25
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -143,7 +143,7 @@ ParticleSystem:
         m_PostInfinity: 2
       minMaxState: 3
     startSpeed:
-      scalar: 2.5
+      scalar: 1.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -270,7 +270,7 @@ ParticleSystem:
         rgba: 4294967295
       minMaxState: 0
     startSize:
-      scalar: 2.5
+      scalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -285,7 +285,7 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - time: 0
-          value: .0800000057
+          value: .200000018
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -332,7 +332,7 @@ ParticleSystem:
     serializedVersion: 2
     enabled: 1
     type: 4
-    radius: .464357376
+    radius: .100000001
     angle: 22.5476284
     length: 5
     boxX: 1
@@ -452,10 +452,10 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4278190335
+          rgba: 255
         key1:
           serializedVersion: 2
-          rgba: 58367
+          rgba: 2214650879
         key2:
           serializedVersion: 2
           rgba: 39423
@@ -483,22 +483,22 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 47031
-        atime2: 0
+        atime1: 10987
+        atime2: 47031
         atime3: 0
         atime4: 0
         atime5: 0
         atime6: 0
         atime7: 0
         m_NumColorKeys: 2
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
-          rgba: 4278240255
+          rgba: 50175
         key1:
           serializedVersion: 2
-          rgba: 39423
+          rgba: 2835388927
         key2:
           serializedVersion: 2
           rgba: 0
@@ -526,15 +526,15 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 6554
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
         atime6: 0
         atime7: 0
         m_NumColorKeys: 2
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minColor:
         serializedVersion: 2
         rgba: 4294967295
