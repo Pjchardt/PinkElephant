@@ -58,6 +58,11 @@ public class Health : MonoBehaviour
 		}
 	}
 
+    public void kill()
+    {
+        ChangeHealth(-health);
+    }
+
 	IEnumerator WaitToReload()
 	{
 		yield return new WaitForSeconds (1f);

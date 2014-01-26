@@ -400,8 +400,11 @@ MonoBehaviour:
   WASDWeapon: {fileID: 8300000, guid: 7180e02b9237e40ab925fb99bbb66489, type: 3}
   generater: {fileID: 55611933}
   floor: {fileID: 1334547686}
+  TimeLimit: 1000
   throughDoor: 0
   remaining: 0
+  timeLeft: 0
+  timeRunning: 0
 --- !u!23 &361139055
 Renderer:
   m_ObjectHideFlags: 0

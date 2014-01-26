@@ -54,9 +54,16 @@ public class Player : MonoBehaviour
     bool hasWeapon = false;
 	public GameObject floor;
 
-    public bool throughDoor = false;
+    public float TimeLimit;
 
+    [HideInInspector]
+    public bool throughDoor = false;
+    [HideInInspector]
     public int remaining;
+    [HideInInspector]
+    public float timeLeft;
+    [HideInInspector]
+    public bool timeRunning;
 
     void Start()
     {
@@ -73,6 +80,7 @@ public class Player : MonoBehaviour
 		Debug.Log(startMousePosition);
 
 		startTime = Time.timeSinceLevelLoad;
+        timeRunning = false;
     }
 
 	void OnGUI()
@@ -85,6 +93,12 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (timeRunning)
+        {
+            timeLeft -= Time.deltaTime;
+            if (timeLeft <= 0)
+                this.gameObject.GetComponent<Health>().kill();
+        }
 		if (this.gameObject.GetComponent<Health>().dead)
 		{
 			return;
@@ -107,7 +121,7 @@ public class Player : MonoBehaviour
 			    LookForNear();
 			    break;
 		}
-	
+	    
     }
 
     void OnTriggerEnter(Collider col)
@@ -148,6 +162,8 @@ public class Player : MonoBehaviour
                 this.gameObject.audio.Play();
                 Camera.main.GetComponent<Bloom>().enabled = true;
                 Camera.main.GetComponent<GlowEffect>().enabled = true;
+                timeLeft = TimeLimit;
+                timeRunning = true;
             }
 			else if (currentMethod == InputMethod.KeyboardControl)
 			{
