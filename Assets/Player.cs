@@ -46,6 +46,7 @@ public class Player : MonoBehaviour
 	public AudioClip door;
 	public AudioClip WASDMusic;
 	public AudioClip MouseMusic;
+	public AudioClip MouseGunMusic;
 
     public GenerateRooms generater;
     bool hasWeapon = false;
@@ -132,6 +133,10 @@ public class Player : MonoBehaviour
 			{
 				this.gameObject.transform.FindChild("mouse").GetComponent<TrailRenderer>().enabled = false;
 				this.gameObject.transform.FindChild("AutoAimGun").gameObject.SetActive(true);
+				this.gameObject.audio.clip = MouseGunMusic;
+				this.gameObject.audio.Play();
+				Camera.main.GetComponent<Bloom>().enabled = true;
+				Camera.main.GetComponent<GlowEffect>().enabled = true;
 			}
         }
     }
