@@ -202,7 +202,7 @@ GameObject:
   - 54: {fileID: 361139059}
   - 135: {fileID: 361139053}
   - 82: {fileID: 361139060}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -219,6 +219,7 @@ Transform:
   m_LocalPosition: {x: 1, y: 1, z: -1}
   m_LocalScale: {x: .5, y: .5, z: .5}
   m_Children:
+  - {fileID: 607392007}
   - {fileID: 1218071234}
   - {fileID: 1496144089}
   m_Father: {fileID: 0}
@@ -391,6 +392,46 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+--- !u!1 &607392005
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 607392007}
+  - 114: {fileID: 607392006}
+  m_Layer: 0
+  m_Name: AutoAimGun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &607392006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 607392005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 580d6cb03ed1c4bd7b90fac1e87086bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireDelay: .100000001
+  Bullet: {fileID: 100000, guid: 0086da088bb09439b99c865d88aa98c3, type: 2}
+--- !u!4 &607392007
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 607392005}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 361139052}
 --- !u!1001 &875470816
 Prefab:
   m_ObjectHideFlags: 0
@@ -676,6 +717,7 @@ GameObject:
   - 33: {fileID: 1496144092}
   - 23: {fileID: 1496144091}
   - 95: {fileID: 1496144090}
+  - 96: {fileID: 1496144093}
   m_Layer: 0
   m_Name: mouse
   m_TagString: Untagged
@@ -739,6 +781,48 @@ MeshFilter:
   m_PrefabInternal: {fileID: 875470816}
   m_GameObject: {fileID: 1496144088}
   m_Mesh: {fileID: 4300000, guid: 1201e2490c9ff453fb528f246a15b0f1, type: 3}
+--- !u!96 &1496144093
+TrailRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1496144088}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_Time: 5
+  m_StartWidth: 1
+  m_EndWidth: 1
+  m_Colors:
+    m_Color[0]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[1]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[2]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[3]:
+      serializedVersion: 2
+      rgba: 4294967295
+    m_Color[4]:
+      serializedVersion: 2
+      rgba: 16777215
+  m_MinVertexDistance: .100000001
+  m_Autodestruct: 0
 --- !u!1 &1517764663
 GameObject:
   m_ObjectHideFlags: 0
