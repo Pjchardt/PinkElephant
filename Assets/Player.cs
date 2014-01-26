@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public GameObject map;
     public GameObject fire;
     public GameObject pink;
+    public GameObject weapon;
 
     public int index;
     public float speed = 2;
@@ -22,9 +23,9 @@ public class Player : MonoBehaviour
     static Color[] colors = { Color.cyan, Color.red, Color.green, Color.magenta };
     public static int score = 0;
 
-	enum InputState {InitialInput, Moving, Paused, MouseUnConnected};
+    public enum InputState { InitialInput, Moving, Paused, MouseUnConnected };
 	public enum InputMethod {KeyboardControl, MouseControl};
-	private InputState currentState;
+    public InputState currentState;
 	public InputMethod currentMethod;
 	private Vector3 startMousePosition;
 	private Vector3 currentMousePosition;
@@ -48,6 +49,8 @@ public class Player : MonoBehaviour
 
     public GenerateRooms generater;
     bool hasWeapon = false;
+
+    public bool throughDoor = false;
 
     void Start()
     {
@@ -121,6 +124,9 @@ public class Player : MonoBehaviour
             hasWeapon = true;
             GameObject.Destroy(col.gameObject);
             generater.AddEnemies();
+            GameObject go = GameObject.Instantiate(weapon) as GameObject;
+            go.transform.parent = this.transform;
+            go.transform.localPosition = new Vector3(0.5f, 0, 0);
         }
     }
 
@@ -129,6 +135,7 @@ public class Player : MonoBehaviour
         Debug.Log(col.gameObject);
         if (col.gameObject.tag == "Door")
         {
+            throughDoor = true;
             Door dc = col.gameObject.GetComponent<Door>();
 			this.gameObject.audio.PlayOneShot(door, .75f);
             //if (keys.Contains(dc.key))

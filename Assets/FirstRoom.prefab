@@ -379,12 +379,12 @@ TextMesh:
   m_GameObject: {fileID: 100014}
   m_Text: ALONE! TAKE THIS.
   m_OffsetZ: 0
-  m_CharacterSize: 1
+  m_CharacterSize: .25
   m_LineSpacing: 1
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 8
+  m_FontSize: 32
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
@@ -400,12 +400,12 @@ TextMesh:
   m_GameObject: {fileID: 100016}
   m_Text: IT'S DANGEROUS TO GO
   m_OffsetZ: 0
-  m_CharacterSize: 1
+  m_CharacterSize: .25
   m_LineSpacing: 1
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 8
+  m_FontSize: 32
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}

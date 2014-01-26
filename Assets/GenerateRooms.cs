@@ -30,7 +30,7 @@ public class GenerateRooms : MonoBehaviour
     List<byte[][]> roomGrids = new List<byte[][]>();
     List<Vector3> roomPos = new List<Vector3>();
 
-    public static GameObject player;
+    public static Player player;
 	private bool movingCamera = false;
 	private Vector3 cameraTarget;
 	public float CameraSpeed = 50f;
@@ -52,7 +52,7 @@ public class GenerateRooms : MonoBehaviour
 
         generateWorld();
 
-        player = GameObject.Find("Player");
+        player = GameObject.Find("Player").GetComponent<Player>();
 
         //List<Vector2> corridor = new List<Vector2>();
         //List<List<Vector2>> floors = new List<List<Vector2>>();
@@ -204,10 +204,12 @@ public class GenerateRooms : MonoBehaviour
 
                 GameObject go = GameObject.Instantiate(Enemy, roomPos[r] + new Vector3(x, y, 0) / roomScale, Quaternion.identity) as GameObject;
                 go.transform.parent = map;
-                if (player.GetComponent<Player>().currentMethod == Player.InputMethod.KeyboardControl)
+                if (player.currentMethod == Player.InputMethod.KeyboardControl)
                 {
                     go.GetComponent<Enemy>().speed *= .4f;
                     go.transform.localScale *= 4f;
+                    go.transform.FindChild("enemy").gameObject.SetActive(true);
+                    go.transform.FindChild("mouseEnemy").gameObject.SetActive(false);
                 }
             }
         }
@@ -247,8 +249,8 @@ public class GenerateRooms : MonoBehaviour
             {
                 if (roomIndexes.Contains(j * mapGridWidth + i))
                 {
-                    int roomWidth = Random.Range(roomGridWidth - 4, roomGridWidth - 2);
-                    int roomHeight = Random.Range(roomGridHeight - 4, roomGridHeight - 2);
+                    int roomWidth = Random.Range(roomGridWidth - 4, roomGridWidth - 4);
+                    int roomHeight = Random.Range(roomGridHeight - 4, roomGridHeight - 4);
                     int startX = i * roomGridWidth + (roomGridWidth - roomWidth) / 2;
                     int startY = j * roomGridHeight + (roomGridHeight - roomHeight) / 2;
                     for (int x = 0; x < roomWidth; x++)
@@ -377,34 +379,38 @@ public class GenerateRooms : MonoBehaviour
 	{
 		if (player.transform.position.x > transform.position.x + roomGridWidth / 2f)
 		{
+            player.throughDoor = false;
             mapX++;
 			movingCamera = true;
-			player.GetComponent<Player>().PausePlayer(true);
+			player.PausePlayer(true);
 			cameraTarget = transform.position + new Vector3(roomGridWidth, 0, 0);
 			//player.GetComponent<MovePlayer>().StartMoving(transform.position.x + (roomGridWidth * .6f), CameraSpeed * 10f);
 		}
 		else if (player.transform.position.x < transform.position.x - roomGridWidth / 2f)
-		{
+        {
+            player.throughDoor = false;
             mapX--;
 			movingCamera = true;
-			player.GetComponent<Player>().PausePlayer(true);
+			player.PausePlayer(true);
 			cameraTarget = transform.position - new Vector3(roomGridWidth, 0, 0);
 			//player.GetComponent<MovePlayer>().StartMoving(transform.position + (cameraTarget-transform.position) * .4f , CameraSpeed * 10f);
 		}
 		
 		if (player.transform.position.y > transform.position.y + roomGridHeight / 2f)
-		{
+        {
+            player.throughDoor = false;
             mapY++;
 			movingCamera = true;
-			player.GetComponent<Player>().PausePlayer(true);
+			player.PausePlayer(true);
 			cameraTarget = transform.position + new Vector3(0, roomGridHeight, 0);
 			//player.GetComponent<MovePlayer>().StartMoving(transform.position - (cameraTarget-transform.position) * .4f , CameraSpeed * 10f);
 		}
 		else if (player.transform.position.y < transform.position.y - roomGridHeight / 2f)
-		{
+        {
+            player.throughDoor = false;
             mapY--;
 			movingCamera = true;
-			player.GetComponent<Player>().PausePlayer(true);
+			player.PausePlayer(true);
 			cameraTarget = transform.position - new Vector3(0, roomGridHeight, 0);
 			//player.GetComponent<MovePlayer>().StartMoving(transform.position - (cameraTarget-transform.position) * .4f , CameraSpeed * 10f);
 		}
@@ -422,9 +428,9 @@ public class GenerateRooms : MonoBehaviour
 		{
 			transform.position = cameraTarget;
 			movingCamera = false;
-			player.GetComponent<Player>().PausePlayer(false);
+			player.PausePlayer(false);
 			//player.GetComponent<Player>().UnConnect();
-			player.GetComponent<Player>().SetNewMouse(Camera.main.WorldToScreenPoint(player.transform.position));
+			player.SetNewMouse(Camera.main.WorldToScreenPoint(player.transform.position));
 			Debug.Log ("Finished moving");
 
             if (firstSwitch)
@@ -434,6 +440,4 @@ public class GenerateRooms : MonoBehaviour
             }
 		}
 	}
-
-
 }

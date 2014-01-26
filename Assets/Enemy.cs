@@ -18,8 +18,8 @@ public class Enemy : MonoBehaviour
     {
         if (target == null)
         {
-            if (GenerateRooms.mapX == mapX && GenerateRooms.mapY == mapY)
-                target = GenerateRooms.player;
+            if (GenerateRooms.mapX == mapX && GenerateRooms.mapY == mapY && GenerateRooms.player.throughDoor)
+                target = GenerateRooms.player.gameObject;
         }
         else
         {
