@@ -87,6 +87,8 @@ GameObject:
   - 124: {fileID: 55611928}
   - 81: {fileID: 55611927}
   - 114: {fileID: 55611933}
+  - 114: {fileID: 55611935}
+  - 114: {fileID: 55611932}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -155,6 +157,24 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!114 &55611932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 55611926}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d1352984e3c6465088f6cc7c4ce6e22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  glowIntensity: .0500000007
+  blurIterations: 2
+  blurSpread: .5
+  glowTint: {r: 1, g: 1, b: 1, a: 0}
+  compositeShader: {fileID: 4800000, guid: 96ca71e39c7b6fb4f9bec2c5bf331349, type: 3}
+  blurShader: {fileID: 4800000, guid: fb52973118cf00648825ced2fcca240c, type: 3}
+  downsampleShader: {fileID: 4800000, guid: b14b79b8936134d3f8238f0c2d40d634, type: 3}
 --- !u!114 &55611933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,7 +205,45 @@ MonoBehaviour:
   Fire: {fileID: 100002, guid: 74c8284510690c0498a758ceb001fc34, type: 2}
   FirstRoom: {fileID: 100000, guid: d6043ce8e94804d44b55c226a34ab9f0, type: 2}
   CameraSpeed: 25
-  throughDoor: 0
+--- !u!114 &55611935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 55611926}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a773099f140e846f7835d27351846623, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweakMode: 0
+  screenBlendMode: 0
+  hdr: 0
+  sepBlurSpread: 2.5
+  quality: 1
+  bloomIntensity: 2
+  bloomThreshhold: .5
+  bloomThreshholdColor: {r: 1, g: 1, b: 1, a: 1}
+  bloomBlurIterations: 2
+  hollywoodFlareBlurIterations: 2
+  flareRotation: 0
+  lensflareMode: 1
+  hollyStretchWidth: 2.5
+  lensflareIntensity: 0
+  lensflareThreshhold: .300000012
+  lensFlareSaturation: .75
+  flareColorA: {r: .400000006, g: .400000006, b: .800000012, a: .75}
+  flareColorB: {r: .400000006, g: .800000012, b: .800000012, a: .75}
+  flareColorC: {r: .800000012, g: .400000006, b: .800000012, a: .75}
+  flareColorD: {r: .800000012, g: .400000006, b: 0, a: .75}
+  blurWidth: 1
+  lensFlareVignetteMask: {fileID: 2800000, guid: 95ef4804fe0be4c999ddaa383536cde8,
+    type: 3}
+  lensFlareShader: {fileID: 4800000, guid: 459fe69d2f6d74ddb92f04dbf45a866b, type: 3}
+  screenBlendShader: {fileID: 4800000, guid: 7856cbff0a0ca45c787d5431eb805bb0, type: 3}
+  blurAndFlaresShader: {fileID: 4800000, guid: be6e39cf196f146d5be72fbefb18ed75, type: 3}
+  brightPassFilterShader: {fileID: 4800000, guid: 0aeaa4cb29f5d4e9c8455f04c8575c8c,
+    type: 3}
 --- !u!1 &361139051
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,6 +311,7 @@ MonoBehaviour:
   weapon: {fileID: 100000, guid: 42925ebac5b94eb419666ded0419f18d, type: 2}
   index: 0
   speed: 5
+  currentState: 0
   currentMethod: 0
   mouseSpeed: 20
   WASDObject: {fileID: 1218071233}
@@ -263,7 +322,9 @@ MonoBehaviour:
   door: {fileID: 8300000, guid: cd8175e13b976499bb64171aeb8ccf75, type: 3}
   WASDMusic: {fileID: 8300000, guid: 9bb114ae9297746dabed1c31af95c9cf, type: 3}
   MouseMusic: {fileID: 8300000, guid: 126ce35e9235b4e4ead264265765b419, type: 3}
+  MouseGunMusic: {fileID: 8300000, guid: a45dcddbf95234af69393999ff7559cd, type: 3}
   generater: {fileID: 55611933}
+  throughDoor: 0
 --- !u!23 &361139055
 Renderer:
   m_ObjectHideFlags: 0
@@ -600,7 +661,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400000, guid: c37b29302018249d2ac66337f0c6b2c0, type: 3}
   m_PrefabInternal: {fileID: 1362974759}
   m_GameObject: {fileID: 1218071233}
-  m_LocalRotation: {x: -.707106888, y: 0, z: -0, w: .707106769}
+  m_LocalRotation: {x: -.707106829, y: 0, z: -0, w: .707106709}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
   m_Children: []

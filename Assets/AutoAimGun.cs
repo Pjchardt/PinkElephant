@@ -50,7 +50,7 @@ public class AutoAimGun : MonoBehaviour
 		}
 
 		GameObject temp = (GameObject)Instantiate(Bullet);
-		temp.transform.position = this.gameObject.transform.position;
+		temp.transform.position = this.gameObject.transform.position + (target - this.gameObject.transform.position).normalized * .5f;
 		temp.rigidbody.velocity = (target - this.gameObject.transform.position).normalized * 30f;
 		//fire at enemy
 
