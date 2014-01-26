@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     char[] wasd = null;
 
     public GameObject map;
+    public GameObject fire;
     public GameObject pink;
 
     public int index;
@@ -167,6 +168,7 @@ public class Player : MonoBehaviour
         {
             pink.SetActive(false);
             map.SetActive(true);
+            GameObject.Destroy(fire);
 
 			//use mouse
 			currentMethod = InputMethod.MouseControl;

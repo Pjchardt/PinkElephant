@@ -166,7 +166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 072a28d28b7b6104e8a599f344df6654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 1137451351}
+  map: {fileID: 1517764664}
+  fire: {fileID: 1137451351}
   mapGridWidth: 4
   mapGridHeight: 4
   roomGridWidth: 16
@@ -243,7 +244,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28dfed2937d2334a923d606ae21241b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 1137451350}
+  map: {fileID: 1517764663}
+  fire: {fileID: 1137451350}
   pink: {fileID: 1873886457}
   index: 0
   speed: 5
@@ -443,7 +445,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1137451351}
   m_Layer: 0
-  m_Name: Map
+  m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -459,7 +461,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1517764664}
 --- !u!1 &1163532172
 GameObject:
   m_ObjectHideFlags: 0
@@ -726,6 +728,33 @@ MeshFilter:
   m_PrefabInternal: {fileID: 875470816}
   m_GameObject: {fileID: 1496144088}
   m_Mesh: {fileID: 4300000, guid: 1201e2490c9ff453fb528f246a15b0f1, type: 3}
+--- !u!1 &1517764663
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1517764664}
+  m_Layer: 0
+  m_Name: Map
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1517764664
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1517764663}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1137451351}
+  m_Father: {fileID: 0}
 --- !u!1 &1873886457
 GameObject:
   m_ObjectHideFlags: 0
