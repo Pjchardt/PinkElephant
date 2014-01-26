@@ -24,6 +24,7 @@ public class GenerateRooms : MonoBehaviour
     public GameObject Enemy;
     public GameObject Goal;
     public GameObject Fire;
+    public GameObject FirstRoom;
 
     byte[][] grid;
     List<byte[][]> roomGrids = new List<byte[][]>();
@@ -38,6 +39,9 @@ public class GenerateRooms : MonoBehaviour
     public static int mapY;
     public static int roomGridWidthStatic;
     public static int roomGridHeightStatic;
+
+    bool firstSwitch = true;
+    GameObject firstRoom;
 
     void Start()
     {
@@ -95,18 +99,18 @@ public class GenerateRooms : MonoBehaviour
 
         for (int r = 0; r < roomGrids.Count; r++)
         {
-            for (int i = 0; i < 4; i++)
-            {
-                int x = Random.Range(0, roomGrids[r].Length);
-                int y = Random.Range(0, roomGrids[r][x].Length);
-                roomGrids[r][x][y] = 1;
-            }
             if (r == 0)
             {
-                roomGrids[r][0][0] = 2;
+                roomGrids[r][roomGrids[0].Length / 2][roomGrids[0][0].Length / 2] = 4;
             }
             else
             {
+                for (int i = 0; i < 4; i++)
+                {
+                    int x = Random.Range(0, roomGrids[r].Length);
+                    int y = Random.Range(0, roomGrids[r][x].Length);
+                    roomGrids[r][x][y] = 1;
+                }
                 for (int i = 0; i < 4; i++)
                 {
                     int x = Random.Range(0, roomGrids[r].Length);
@@ -150,16 +154,17 @@ public class GenerateRooms : MonoBehaviour
                             //go.renderer.material.color *= (float)roomGrid[i][j] / pcgb.rooms.Count;
                             //go.GetComponent<Door>().key = roomGrid[i][j] - 1;
                             break;
-                        /*case 4: // Corridor
-                            //go = GameObject.Instantiate(Corridor, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
-                            corridor.Add(new Vector2(i, j));
-                            break;*/
+                        case 4: // Corridor
+                            go = GameObject.Instantiate(FirstRoom, roomPos[r] + new Vector3(i, j, 0) / roomScale, Quaternion.identity) as GameObject;
+                            go.transform.parent = map;
+                            firstRoom = go;
+                            break;
                     }
                 }
             }
         }
 
-        player.transform.position = roomPos[0] + new Vector3(roomGrids[0].Length / 2, roomGrids[0][0].Length / 2, 0) / roomScale;
+        player.transform.position = roomPos[0] + new Vector3(roomGrids[0].Length / 2, 2, 0) / roomScale;
         mapX = (int)(player.transform.position.x / roomGridWidth);
         mapY = (int)(player.transform.position.y / roomGridHeight);
 
@@ -186,6 +191,26 @@ public class GenerateRooms : MonoBehaviour
             this.transform.position.z);
         //this.camera.orthographicSize = roomGridHeight * mapGridHeight / 2f;
         //this.transform.position = new Vector3(roomGridWidth * mapGridWidth / 2f - 0.5f, roomGridHeight * mapGridHeight / 2f - 0.5f, this.transform.position.z);
+    }
+
+    public void AddEnemies()
+    {
+        for (int r = 1; r < roomGrids.Count; r++)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                int x = Random.Range(0, roomGrids[r].Length);
+                int y = Random.Range(0, roomGrids[r][x].Length);
+
+                GameObject go = GameObject.Instantiate(Enemy, roomPos[r] + new Vector3(x, y, 0) / roomScale, Quaternion.identity) as GameObject;
+                go.transform.parent = map;
+                if (player.GetComponent<Player>().currentMethod == Player.InputMethod.KeyboardControl)
+                {
+                    go.GetComponent<Enemy>().speed *= .4f;
+                    go.transform.localScale *= 4f;
+                }
+            }
+        }
     }
 
     void Update()
@@ -401,6 +426,12 @@ public class GenerateRooms : MonoBehaviour
 			//player.GetComponent<Player>().UnConnect();
 			player.GetComponent<Player>().SetNewMouse(Camera.main.WorldToScreenPoint(player.transform.position));
 			Debug.Log ("Finished moving");
+
+            if (firstSwitch)
+            {
+                GameObject.Destroy(firstRoom);
+                firstSwitch = false;
+            }
 		}
 	}
 

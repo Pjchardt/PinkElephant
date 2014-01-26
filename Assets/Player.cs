@@ -23,9 +23,9 @@ public class Player : MonoBehaviour
     public static int score = 0;
 
 	enum InputState {InitialInput, Moving, Paused, MouseUnConnected};
-	enum InputMethod {KeyboardControl, MouseControl};
+	public enum InputMethod {KeyboardControl, MouseControl};
 	private InputState currentState;
-	private InputMethod currentMethod;
+	public InputMethod currentMethod;
 	private Vector3 startMousePosition;
 	private Vector3 currentMousePosition;
 	public float mouseSpeed = 3f;
@@ -45,6 +45,9 @@ public class Player : MonoBehaviour
 	public AudioClip door;
 	public AudioClip WASDMusic;
 	public AudioClip MouseMusic;
+
+    public GenerateRooms generater;
+    bool hasWeapon = false;
 
     void Start()
     {
@@ -112,6 +115,12 @@ public class Player : MonoBehaviour
         else if (col.gameObject.tag == "Goal")
         {
             col.gameObject.GetComponent<Goal>().FinishGame();
+        }
+        else if (col.gameObject.tag == "Weapon")
+        {
+            hasWeapon = true;
+            GameObject.Destroy(col.gameObject);
+            generater.AddEnemies();
         }
     }
 
@@ -185,6 +194,7 @@ public class Player : MonoBehaviour
 			//use mouse
 			currentMethod = InputMethod.MouseControl;
 			currentState = InputState.Moving;
+            currentMousePosition = Camera.main.WorldToScreenPoint(this.transform.position);
 			float inputDelay = Time.timeSinceLevelLoad - startTime;
 			inputDelay /= 4f;
 			inputDelay = Mathf.Clamp(inputDelay, 0f, .4f);
