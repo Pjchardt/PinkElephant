@@ -31,6 +31,8 @@ public class Health : MonoBehaviour
 				health = 100f;
 			}
 		}
+
+		this.gameObject.audio.volume = .25f + ((100f - health)/100f) * .75f;
 	}
 
 	public void ChangeHealth(float delta)

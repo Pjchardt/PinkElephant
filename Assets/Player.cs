@@ -177,6 +177,7 @@ public class Player : MonoBehaviour
 			Time.timeScale = 1.2f - inputDelay;
 			MouseObject.SetActive(true);
 			this.gameObject.renderer.enabled = false;
+			GameObject.Find("Directional light").light.intensity = .75f;
 			//Debug.Log( Input.GetAxis ("Mouse X") + " : " +  Input.GetAxis("Mouse Y"));
 			//Debug.Log ("MouseControl");
 		}
