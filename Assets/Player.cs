@@ -29,6 +29,9 @@ public class Player : MonoBehaviour
 	private Vector3 oldMousePosition;
 	private Vector3 newMousePosition;
 
+	public GameObject WASDObject;
+	public GameObject MouseObject;
+
 	public Texture cursorImage;
 
 	private float startTime;
@@ -140,6 +143,17 @@ public class Player : MonoBehaviour
 				inputDelay /= 5f;
 				inputDelay = Mathf.Clamp(inputDelay, 0f, 1f);
 				Time.timeScale = 1.5f - inputDelay;
+
+				WASDObject.SetActive(true);
+				this.gameObject.renderer.enabled = false;
+
+				GameObject [] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+				for (int ct = 0; ct < allEnemies.Length; ct++)
+				{
+					allEnemies[ct].GetComponent<Enemy>().speed *= .4f;
+					allEnemies[ct].transform.localScale *= 4f;
+				}
+
 				return;
 			}
 
@@ -152,6 +166,8 @@ public class Player : MonoBehaviour
 			inputDelay /= 4f;
 			inputDelay = Mathf.Clamp(inputDelay, 0f, .4f);
 			Time.timeScale = 1.2f - inputDelay;
+			MouseObject.SetActive(true);
+			this.gameObject.renderer.enabled = false;
 			//Debug.Log( Input.GetAxis ("Mouse X") + " : " +  Input.GetAxis("Mouse Y"));
 			//Debug.Log ("MouseControl");
 		}
