@@ -122,6 +122,7 @@ public class GenerateRooms : MonoBehaviour
 
         roomGrids[roomGrids.Count - 1][roomGrids[roomGrids.Count - 1].Length / 2][roomGrids[roomGrids.Count - 1][0].Length / 2] = 3;
 
+        player.remaining = 0;
         for (int r = 0; r < roomGrids.Count; r++)
         {
             for (int i = 0; i < roomGrids[r].Length; i++)
@@ -137,6 +138,7 @@ public class GenerateRooms : MonoBehaviour
                         case 1: // Floor
                             go = GameObject.Instantiate(Key, roomPos[r] + new Vector3(i, j, 0) / roomScale, Quaternion.identity) as GameObject;
                             go.transform.parent = map;
+                            player.remaining++;
                             //go.renderer.material.color *= (float)roomGrid[i][j] / pcgb.rooms.Count;
                             //floors[roomGrid[i][j] - 1].Add(new Vector2(i, j));
                             break;

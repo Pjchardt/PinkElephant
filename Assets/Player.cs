@@ -55,6 +55,8 @@ public class Player : MonoBehaviour
 
     public bool throughDoor = false;
 
+    public int remaining;
+
     void Start()
     {
         score = 0;
@@ -117,9 +119,11 @@ public class Player : MonoBehaviour
 			this.gameObject.audio.PlayOneShot(coin, .75f);
             GameObject.Destroy(col.gameObject);
             score++;
+            remaining--;
         }
         else if (col.gameObject.tag == "Goal")
         {
+            if (currentMethod != InputMethod.MouseControl || remaining == 0)
             col.gameObject.GetComponent<Goal>().FinishGame();
         }
         else if (col.gameObject.tag == "Weapon")
