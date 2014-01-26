@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -126,6 +126,10 @@ public class Player : MonoBehaviour
             hasWeapon = true;
             GameObject.Destroy(col.gameObject);
 			//have valuye passed in to AddEnemies with the enemy multiplier
+            generater.AddEnemies();
+            GameObject go = GameObject.Instantiate(weapon) as GameObject;
+            go.transform.parent = this.transform;
+            go.transform.localPosition = new Vector3(0.5f, 0, 0);
 			if (currentMethod == InputMethod.MouseControl)
 			{
 				this.gameObject.transform.FindChild("mouse").GetComponent<TrailRenderer>().enabled = false;
