@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class GenerateRooms : MonoBehaviour
 {
+    public Transform map;
+
     public int mapGridWidth = 4;
     public int mapGridHeight = 4;
     public int roomGridWidth = 8;
@@ -37,6 +39,8 @@ public class GenerateRooms : MonoBehaviour
 
     void Start()
     {
+        map.gameObject.SetActive(false);
+
         roomGridWidthStatic = roomGridWidth;
         roomGridHeightStatic = roomGridHeight;
 
@@ -57,6 +61,7 @@ public class GenerateRooms : MonoBehaviour
                 {
                     case 0: // Empty
                         go = GameObject.Instantiate(Floor, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
+                        go.transform.parent = map;
                         break;
                     case 1: // Floor
                         //go = GameObject.Instantiate(Floor, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
@@ -70,6 +75,7 @@ public class GenerateRooms : MonoBehaviour
                         break;
                     case 3: // Door
                         go = GameObject.Instantiate(Door, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
+                        go.transform.parent = map;
                         //go.renderer.material.color *= (float)roomGrid[i][j] / pcgb.rooms.Count;
                         //go.GetComponent<Door>().key = roomGrid[i][j] - 1;
                         break;
@@ -120,17 +126,20 @@ public class GenerateRooms : MonoBehaviour
                             break;
                         case 1: // Floor
                             go = GameObject.Instantiate(Key, roomPos[r] + new Vector3(i, j, 0) / roomScale, Quaternion.identity) as GameObject;
+                            go.transform.parent = map;
                             //go.renderer.material.color *= (float)roomGrid[i][j] / pcgb.rooms.Count;
                             //floors[roomGrid[i][j] - 1].Add(new Vector2(i, j));
                             break;
                         case 2: // Wall
                             go = GameObject.Instantiate(Enemy, roomPos[r] + new Vector3(i, j, 0) / roomScale, Quaternion.identity) as GameObject;
+                            go.transform.parent = map;
                             //go = GameObject.Instantiate(Floor, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
                             //go = GameObject.Instantiate(Wall, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
                             //go.renderer.material.color *= (float)roomGrid[i][j] / pcgb.rooms.Count;
                             break;
                         case 3: // Door
                             go = GameObject.Instantiate(Goal, roomPos[r] + new Vector3(i, j, 0) / roomScale, Quaternion.identity) as GameObject;
+                            go.transform.parent = map;
                             //go = GameObject.Instantiate(Door, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
                             //go.renderer.material.color *= (float)roomGrid[i][j] / pcgb.rooms.Count;
                             //go.GetComponent<Door>().key = roomGrid[i][j] - 1;

@@ -10,6 +10,9 @@ public class Player : MonoBehaviour
 
     char[] wasd = null;
 
+    public GameObject map;
+    public GameObject pink;
+
     public int index;
     public float speed = 2;
     List<int> keys = new List<int>();
@@ -136,6 +139,9 @@ public class Player : MonoBehaviour
 				wasd[2] = qwerty[i, j];
 				wasd[3] = qwerty[i, j + 1];
 
+                pink.SetActive(false);
+                map.SetActive(true);
+
 				currentMethod = InputMethod.KeyboardControl;
 				currentState = InputState.Moving;
 				//Debug.Log ("KeyboardControl");
@@ -158,7 +164,10 @@ public class Player : MonoBehaviour
 			}
 
 		if ( Input.GetAxis ("Mouse X") > .5 || Input.GetAxis("Mouse Y") > .5)
-		{
+        {
+            pink.SetActive(false);
+            map.SetActive(true);
+
 			//use mouse
 			currentMethod = InputMethod.MouseControl;
 			currentState = InputState.Moving;
