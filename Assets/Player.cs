@@ -153,6 +153,13 @@ public class Player : MonoBehaviour
 				WASDObject.SetActive(true);
 				this.gameObject.renderer.enabled = false;
 
+				GameObject [] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+				for (int ct = 0; ct < allEnemies.Length; ct++)
+				{
+					allEnemies[ct].GetComponent<Enemy>().speed *= .4f;
+					allEnemies[ct].transform.localScale *= 4f;
+				}
+
 				return;
 			}
 

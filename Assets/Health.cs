@@ -22,11 +22,24 @@ public class Health : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-	
+		if (health < 100)
+		{
+			health += 15f * Time.deltaTime;
+
+			if (health > 100)
+			{
+				health = 100f;
+			}
+		}
 	}
 
 	public void ChangeHealth(float delta)
 	{
 		health += delta;
+
+		if (health <= 0)
+		{
+			Application.LoadLevel(Application.loadedLevel);
+		}
 	}
 }

@@ -27,4 +27,20 @@ public class Enemy : MonoBehaviour
             this.transform.position += dir.normalized * speed * Time.deltaTime;
         }
     }
+
+	void OnCollisionEnter(Collision collision)
+	{
+		if (collision.gameObject.tag == "Player")
+		{
+			collision.gameObject.GetComponent<Health>().ChangeHealth(-5);
+		}
+	}
+
+	void OnCollisionStay(Collision collision)
+	{
+		if (collision.gameObject.tag == "Player")
+		{
+			collision.gameObject.GetComponent<Health>().ChangeHealth(-1);
+		}
+	}
 }
