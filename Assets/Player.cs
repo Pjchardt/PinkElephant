@@ -212,7 +212,7 @@ public class Player : MonoBehaviour
 				float inputDelay = Time.timeSinceLevelLoad - startTime;
 				inputDelay /= 5f;
 				inputDelay = Mathf.Clamp(inputDelay, 0f, 1f);
-				Time.timeScale = 1.5f - inputDelay;
+				Time.timeScale = 1.2f;
 
 				WASDObject.SetActive(true);
 				this.gameObject.renderer.enabled = false;
@@ -254,7 +254,7 @@ public class Player : MonoBehaviour
 			float inputDelay = Time.timeSinceLevelLoad - startTime;
 			inputDelay /= 4f;
 			inputDelay = Mathf.Clamp(inputDelay, 0f, .4f);
-			Time.timeScale = 1.2f - inputDelay;
+			Time.timeScale = 1.2f;
 			MouseObject.SetActive(true);
 			this.gameObject.renderer.enabled = false;
 			GameObject.Find("Directional light").light.intensity = .9f;
