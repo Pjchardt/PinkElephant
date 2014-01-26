@@ -179,6 +179,7 @@ MonoBehaviour:
   Corridor: {fileID: 100000, guid: 7e758f510759cfb4db6c8d6554c739cc, type: 2}
   Key: {fileID: 100000, guid: 8976f3cb06c919a4789317146548a8a3, type: 2}
   Enemy: {fileID: 100002, guid: 3fc5f5705946d9747bbb91e4ba6b18e8, type: 2}
+  Goal: {fileID: 100000, guid: c3751736022121140b6c93162ca1c1da, type: 2}
   CameraSpeed: 25
 --- !u!1 &361139051
 GameObject:
@@ -193,6 +194,8 @@ GameObject:
   - 114: {fileID: 361139054}
   - 143: {fileID: 361139053}
   - 114: {fileID: 361139056}
+  - 54: {fileID: 361139059}
+  - 135: {fileID: 361139058}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -240,8 +243,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   index: 0
   speed: 8
-  ladders: 0
-  score: 0
   mouseSpeed: 20
   cursorImage: {fileID: 2800000, guid: 171112a1dbfef47079053f62a4842625, type: 3}
 --- !u!23 &361139055
@@ -285,3 +286,30 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 361139051}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!135 &361139058
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 361139051}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: .500000119
+  m_Center: {x: 5.96046448e-08, y: 0, z: -8.94069672e-08}
+--- !u!54 &361139059
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 361139051}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: .0500000007
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 8
+  m_CollisionDetection: 0

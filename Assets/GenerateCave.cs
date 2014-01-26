@@ -239,10 +239,6 @@ public class GenerateCave : MonoBehaviour
                 break;
         }
 
-        //GameObject player = GameObject.Find("Player");
-        for (int i = 0; i < players.Length; i++)
-            players[i].GetComponent<Player>().ladders = 0;
-
         corridor = new List<Vector2>();
         for (int j = 0; j < grid_height; j++)
         {

@@ -19,6 +19,7 @@ public class GenerateRooms : MonoBehaviour
     public GameObject Corridor;
     public GameObject Key;
     public GameObject Enemy;
+    public GameObject Goal;
 
     byte[][] grid;
     List<byte[][]> roomGrids = new List<byte[][]>();
@@ -88,13 +89,22 @@ public class GenerateRooms : MonoBehaviour
                 int y = Random.Range(0, roomGrids[r][x].Length);
                 roomGrids[r][x][y] = 1;
             }
-            for (int i = 0; i < 4; i++)
+            if (r == 0)
             {
-                int x = Random.Range(0, roomGrids[r].Length);
-                int y = Random.Range(0, roomGrids[r][x].Length);
-                roomGrids[r][x][y] = 2;
+                roomGrids[r][0][0] = 2;
+            }
+            else
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    int x = Random.Range(0, roomGrids[r].Length);
+                    int y = Random.Range(0, roomGrids[r][x].Length);
+                    roomGrids[r][x][y] = 2;
+                }
             }
         }
+
+        roomGrids[roomGrids.Count - 1][roomGrids[roomGrids.Count - 1].Length / 2][roomGrids[roomGrids.Count - 1][0].Length / 2] = 3;
 
         for (int r = 0; r < roomGrids.Count; r++)
         {
@@ -120,6 +130,7 @@ public class GenerateRooms : MonoBehaviour
                             //go.renderer.material.color *= (float)roomGrid[i][j] / pcgb.rooms.Count;
                             break;
                         case 3: // Door
+                            go = GameObject.Instantiate(Goal, roomPos[r] + new Vector3(i, j, 0) / roomScale, Quaternion.identity) as GameObject;
                             //go = GameObject.Instantiate(Door, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
                             //go.renderer.material.color *= (float)roomGrid[i][j] / pcgb.rooms.Count;
                             //go.GetComponent<Door>().key = roomGrid[i][j] - 1;

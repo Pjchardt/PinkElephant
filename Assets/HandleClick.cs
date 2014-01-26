@@ -32,6 +32,6 @@ public class HandleClick : MonoBehaviour
     void OnGUI()
     {
         for (int i=0; i<players.Length; i++)
-            GUI.Label(new Rect(0, i * 64, 100, 64), "P" + (i+1) + ": " + players[i].score, style);
+            GUI.Label(new Rect(0, i * 64, 100, 64), "P" + (i+1) + ": " + Player.score, style);
     }
 }

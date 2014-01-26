@@ -13,11 +13,10 @@ public class Player : MonoBehaviour
     public int index;
     public float speed = 2;
     List<int> keys = new List<int>();
-    CharacterController controller;
+    //CharacterController controller;
     Vector3 vel;
-    public int ladders = 0;
     static Color[] colors = { Color.cyan, Color.red, Color.green, Color.magenta };
-    public int score = 0;
+    public static int score = 0;
 
 	enum InputState {InitialInput, Moving, Paused, MouseUnConnected};
 	enum InputMethod {KeyboardControl, MouseControl};
@@ -36,8 +35,9 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        score = 0;
         keys.Add(0);
-        controller = this.gameObject.GetComponent<CharacterController>();
+        //controller = this.gameObject.GetComponent<CharacterController>();
         vel = Vector3.zero;
         this.gameObject.renderer.material.color = colors[index];
 
@@ -65,56 +65,50 @@ public class Player : MonoBehaviour
 
 		switch (currentState)
 		{
-		case InputState.InitialInput:
-			LookForInput();
-			break;
+		    case InputState.InitialInput:
+			    LookForInput();
+			    break;
 
-		case InputState.Moving:
-			Move();
-			break;
-		case InputState.Paused:
-			break;
-		case InputState.MouseUnConnected:
-			LookForNear();
-			break;
+		    case InputState.Moving:
+			    Move();
+			    break;
+		    case InputState.Paused:
+			    break;
+		    case InputState.MouseUnConnected:
+			    LookForNear();
+			    break;
 		}
 	
     }
 
     void OnTriggerEnter(Collider col)
     {
-        /*TrailHead th = col.gameObject.GetComponent<TrailHead>();
-        if (th != null)
-            th.TurnOn();
-        GameObject.Destroy(col.gameObject);*/
-        if (col.gameObject.tag == "Door")
-        {
-            Door dc = col.gameObject.GetComponent<Door>();
-            if (keys.Contains(dc.key))
-                GameObject.Destroy(col.gameObject);
-        }
-        else if (col.gameObject.tag == "Key")
+        /*if (col.gameObject.tag == "Key")
         {
             Key kc = col.gameObject.GetComponent<Key>();
             keys.Add(kc.door);
             GameObject.Destroy(col.gameObject);
         }
-        /*if (col.gameObject.tag == "Door")
-        {
-            ladders++;
-        }
-        else if (col.gameObject.tag == "Key")
+        */
+        if (col.gameObject.tag == "Key")
         {
             GameObject.Destroy(col.gameObject);
             score++;
-        }*/
+        }
+        else if (col.gameObject.tag == "Goal")
+        {
+            col.gameObject.GetComponent<Goal>().FinishGame();
+        }
     }
 
-    void OnTriggerExit(Collider col)
+    void OnCollisionEnter(Collision col)
     {
+        Debug.Log(col.gameObject);
         if (col.gameObject.tag == "Door")
         {
-            ladders--;
+            Door dc = col.gameObject.GetComponent<Door>();
+            //if (keys.Contains(dc.key))
+            GameObject.Destroy(col.gameObject);
         }
     }
 
@@ -184,7 +178,7 @@ public class Player : MonoBehaviour
 		Vector3 mouseDelta = new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0f) * 15f;
 		currentMousePosition = currentMousePosition * (4f * Time.deltaTime) + (currentMousePosition + mouseDelta) * (1f - 4f * Time.deltaTime);
 		oldMousePosition = newMousePosition;
-		Debug.Log (currentMousePosition);
+		//Debug.Log (currentMousePosition);
 
 		//cast ray into scene and move player towards position
 		float distance = (Camera.main.transform.position - this.gameObject.transform.position).magnitude;
@@ -204,7 +198,9 @@ public class Player : MonoBehaviour
 			//this.gameObject.transform.position = new Vector3(point.x, point.y, this.gameObject.transform.position.z);
 			Debug.Log("At Target");
 		}
-		controller.Move(vel * Time.deltaTime);
+        //controller.Move(vel * Time.deltaTime);
+        //this.transform.position += vel * Time.deltaTime;
+        rigidbody.velocity = vel;
 	}
 
 	private void MoveWithKeyboard()
@@ -247,8 +243,10 @@ public class Player : MonoBehaviour
 			{
 				//vel.y = speed * 1.75f;
 			}
-			
-			controller.Move(vel * Time.deltaTime);
+
+            //controller.Move(vel * Time.deltaTime);
+            //this.transform.position += vel * Time.deltaTime;
+            rigidbody.velocity = vel;
 		}
 	}
 
@@ -256,7 +254,8 @@ public class Player : MonoBehaviour
 	{
 		if (b)
 		{
-			currentState = InputState.Paused;
+            currentState = InputState.Paused;
+            rigidbody.velocity = Vector3.zero;
 		}
 		else
 		{
