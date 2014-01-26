@@ -166,7 +166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 072a28d28b7b6104e8a599f344df6654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 1137451351}
+  map: {fileID: 1517764664}
+  fire: {fileID: 1137451351}
   mapGridWidth: 4
   mapGridHeight: 4
   roomGridWidth: 16
@@ -243,7 +244,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28dfed2937d2334a923d606ae21241b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 1137451350}
+  map: {fileID: 1517764663}
+  fire: {fileID: 1137451350}
   pink: {fileID: 1873886457}
   index: 0
   speed: 5
@@ -251,11 +253,6 @@ MonoBehaviour:
   WASDObject: {fileID: 1218071233}
   MouseObject: {fileID: 1496144088}
   cursorImage: {fileID: 2800000, guid: 171112a1dbfef47079053f62a4842625, type: 3}
-  HealthModifier: 1
-  coin: {fileID: 8300000, guid: 48515191bdcd2478ca8c0d4b6bdd0020, type: 3}
-  door: {fileID: 8300000, guid: cd8175e13b976499bb64171aeb8ccf75, type: 3}
-  WASDMusic: {fileID: 8300000, guid: 9bb114ae9297746dabed1c31af95c9cf, type: 3}
-  MouseMusic: {fileID: 8300000, guid: 126ce35e9235b4e4ead264265765b419, type: 3}
 --- !u!23 &361139055
 Renderer:
   m_ObjectHideFlags: 0
@@ -309,8 +306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  blackTexture: {fileID: 2800000, guid: 10dae198f033069499641793c6afa4f8, type: 3}
-  overlayColor: {r: 0, g: 0, b: 0, a: 0}
+  blackTexture: {fileID: 2800000, guid: dda1e044dd67448cbb2d2f840d0d9a97, type: 3}
 --- !u!54 &361139059
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -335,7 +331,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 3
   m_audioClip: {fileID: 8300000, guid: 9bb114ae9297746dabed1c31af95c9cf, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
@@ -449,7 +445,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1137451351}
   m_Layer: 0
-  m_Name: Map
+  m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -465,7 +461,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1517764664}
 --- !u!1 &1163532172
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,7 +548,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400000, guid: c37b29302018249d2ac66337f0c6b2c0, type: 3}
   m_PrefabInternal: {fileID: 1362974759}
   m_GameObject: {fileID: 1218071233}
-  m_LocalRotation: {x: -.707106829, y: 0, z: -0, w: .707106709}
+  m_LocalRotation: {x: -.707106888, y: 0, z: -0, w: .707106769}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
   m_Children: []
@@ -669,7 +665,6 @@ GameObject:
   - 33: {fileID: 1496144092}
   - 23: {fileID: 1496144091}
   - 95: {fileID: 1496144090}
-  - 96: {fileID: 1496144093}
   m_Layer: 0
   m_Name: mouse
   m_TagString: Untagged
@@ -733,48 +728,33 @@ MeshFilter:
   m_PrefabInternal: {fileID: 875470816}
   m_GameObject: {fileID: 1496144088}
   m_Mesh: {fileID: 4300000, guid: 1201e2490c9ff453fb528f246a15b0f1, type: 3}
---- !u!96 &1496144093
-TrailRenderer:
+--- !u!1 &1517764663
+GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1496144088}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_Materials:
-  - {fileID: 0}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_SortingLayerID: 0
-  m_Time: 5
-  m_StartWidth: 1
-  m_EndWidth: 1
-  m_Colors:
-    m_Color[0]:
-      serializedVersion: 2
-      rgba: 4294967295
-    m_Color[1]:
-      serializedVersion: 2
-      rgba: 4294967295
-    m_Color[2]:
-      serializedVersion: 2
-      rgba: 4294967295
-    m_Color[3]:
-      serializedVersion: 2
-      rgba: 4294967295
-    m_Color[4]:
-      serializedVersion: 2
-      rgba: 16777215
-  m_MinVertexDistance: .100000001
-  m_Autodestruct: 0
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1517764664}
+  m_Layer: 0
+  m_Name: Map
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1517764664
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1517764663}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1137451351}
+  m_Father: {fileID: 0}
 --- !u!1 &1873886457
 GameObject:
   m_ObjectHideFlags: 0

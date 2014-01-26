@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class GenerateRooms : MonoBehaviour
 {
     public Transform map;
+    public Transform fire;
 
     public int mapGridWidth = 4;
     public int mapGridHeight = 4;
@@ -84,7 +85,7 @@ public class GenerateRooms : MonoBehaviour
                         go = GameObject.Instantiate(Floor, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
                         go.transform.parent = map;
                         go = GameObject.Instantiate(Fire, new Vector3(i, j, -1), Quaternion.Euler(180, 0, 0)) as GameObject;
-                        go.transform.parent = map;
+                        go.transform.parent = fire;
                         //go = GameObject.Instantiate(Corridor, new Vector3(i, j, 0), Quaternion.identity) as GameObject;
                         //corridor.Add(new Vector2(i, j));
                         break;
