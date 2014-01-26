@@ -6,6 +6,8 @@ public class Health : MonoBehaviour
 	public float health;
 	public Texture blackTexture;
 	public Color overlayColor = new Color(0, 0, 0, 0);
+	public bool dead = false;
+	public AudioClip deathSound;
 	// Use this for initialization
 	void Start () 
 	{
@@ -23,6 +25,10 @@ public class Health : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		if (dead)
+		{
+			return;
+		}
 		if (health < 100)
 		{
 			health += 15f * Time.deltaTime;
@@ -38,12 +44,24 @@ public class Health : MonoBehaviour
 
 	public void ChangeHealth(float delta)
 	{
-
+		if (dead)
+		{
+			return;
+		}
 		health += delta * this.gameObject.GetComponent<Player>().HealthModifier;
 
 		if (health <= 0)
 		{
-			Application.LoadLevel(Application.loadedLevel);
+			audio.PlayOneShot(deathSound);
+			dead = true;
+			StartCoroutine(WaitToReload());
 		}
+	}
+
+	IEnumerator WaitToReload()
+	{
+		yield return new WaitForSeconds (1f);
+
+		Application.LoadLevel(Application.loadedLevel);
 	}
 }

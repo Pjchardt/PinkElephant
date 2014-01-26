@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
 
 	public AudioClip coin;
 	public AudioClip door;
+	public AudioClip startGame;
 	public AudioClip WASDMusic;
 	public AudioClip MouseMusic;
 	public AudioClip MouseGunMusic;
@@ -84,6 +85,10 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+		if (this.gameObject.GetComponent<Health>().dead)
+		{
+			return;
+		}
 		Screen.lockCursor = true;
 		Screen.showCursor = false;
 
@@ -229,7 +234,10 @@ public class Player : MonoBehaviour
 				{
 					Destroy(allKeys[ct]);
 				}
-
+				GameObject temp = new GameObject();
+				temp.AddComponent<AudioSource>();
+				temp.audio.PlayOneShot(startGame);
+				Destroy(temp, startGame.length);
 				return;
 			}
 
@@ -253,6 +261,10 @@ public class Player : MonoBehaviour
 			GameObject.Find("Directional light").light.color = new Color(.975f, 1f, .025f);
 			Camera.main.backgroundColor = new Color(.025f, .25f, .7f);
 			this.gameObject.GetComponent<Health>().overlayColor = new Color(.75f, 1f, .35f);
+			GameObject temp = new GameObject();
+			temp.AddComponent<AudioSource>();
+			temp.audio.PlayOneShot(startGame);
+			Destroy(temp, startGame.length);
 			this.gameObject.audio.clip = MouseMusic;
 			this.gameObject.audio.Play();
 			//Debug.Log( Input.GetAxis ("Mouse X") + " : " +  Input.GetAxis("Mouse Y"));
