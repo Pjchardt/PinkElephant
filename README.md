@@ -17,7 +17,7 @@ Language: C#
 Pen and Paper provided by BCTC
 3D MOdeling: Blender
 Sfx: Bfxr, Audacity
-Music: Kevin MacLeod (incompetech.com) 
+Music: Chase Pulse Faster, Cut and Run, Full On, and Mistake the Getaway by Kevin MacLeod (incompetech.com) 
         Licensed under Creative Commons: By Attribution 3.0
         http://creativecommons.org/licenses/by/3.0/
         
